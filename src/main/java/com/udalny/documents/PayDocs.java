@@ -1,7 +1,6 @@
 package com.udalny.documents;
 
 import java.util.Date;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.HashMap;
 

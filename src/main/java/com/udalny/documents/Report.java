@@ -3,13 +3,10 @@ package com.udalny.documents;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.HashMap;
-import java.util.Iterator;
 
 public class Report
 	extends ServerDocument
 {
-
-	private HashMap<String, Object> map;
 
 	private int DocNum;
 	private Date DocDate;

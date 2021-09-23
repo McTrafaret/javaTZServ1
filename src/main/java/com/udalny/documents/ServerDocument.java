@@ -48,4 +48,28 @@ public abstract class ServerDocument
 				return null;
 		}
 	}
+
+	public LinkedList<HashMap<String, Object>> getListOfDocs()
+	{
+		LinkedList<HashMap<String, Object>> ret;
+		HashMap<String, Object> tempmap;
+		Object temp;
+
+		if(map == null)
+			return null;
+
+		tempmap = (HashMap<String, Object>) map.get("Docs");
+		temp = tempmap.get("Doc");
+		if(temp instanceof LinkedList<?>)
+		{
+			return (LinkedList<HashMap<String, Object>>) temp;
+		}
+		else
+		{
+			ret = new LinkedList<HashMap<String, Object>>();
+			ret.add((HashMap<String, Object>) temp);
+		}
+
+		return ret;
+	}
 }
