@@ -56,4 +56,9 @@ public class SummaryDocumentFactory
 
 		return list;
 	}
+
+	public static LinkedList<SummaryDocument> getListOfSummaryDocuments(DocumentPair pair)
+	{
+		return getListOfSummaryDocuments(pair.getReport(), pair.getPaydocs());
+	}
 }

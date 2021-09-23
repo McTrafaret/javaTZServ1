@@ -4,12 +4,13 @@ import javax.xml.parsers.*;
 
 import org.w3c.dom.*;
 import java.util.*;
+import java.io.InputStream;
+import java.io.FileInputStream;
 
 public class DOMXMLParser
 	extends XMLParser
 {
-
-	private String filename;
+	private InputStream in;
 
 	private boolean hasChildElements(Element el)
 	{
@@ -85,7 +86,19 @@ public class DOMXMLParser
 
 	public DOMXMLParser(String filename)
 	{
-		this.filename = filename;
+		try
+		{
+			in = new FileInputStream(filename);
+		}
+		catch(Exception ex)
+		{
+			System.err.println(ex);
+		}
+	}
+
+	public DOMXMLParser(InputStream in)
+	{
+		this.in = in;
 	}
 
 	public HashMap<String, Object> parse()
@@ -106,7 +119,7 @@ public class DOMXMLParser
 
 		try
 		{
-			doc = builder.parse(filename);
+			doc = builder.parse(in);
 		}
 		catch(Exception ex)
 		{

@@ -1,6 +1,7 @@
 package com.udalny.documents;
 
 import java.util.HashMap;
+import java.io.InputStream;
 import com.udalny.xml.*;
 
 public class ServerDocumentFactory
@@ -21,6 +22,13 @@ public class ServerDocumentFactory
 	public static ServerDocument getDocument(String XMLFilename)
 	{
 		DOMXMLParser parser = new DOMXMLParser(XMLFilename);
+		HashMap<String, Object> map = parser.parse();
+		return getDocument(map);
+	}
+
+	public static ServerDocument getDocument(InputStream in)
+	{
+		DOMXMLParser parser = new DOMXMLParser(in);
 		HashMap<String, Object> map = parser.parse();
 		return getDocument(map);
 	}
