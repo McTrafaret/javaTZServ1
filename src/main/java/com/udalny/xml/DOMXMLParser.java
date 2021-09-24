@@ -40,7 +40,6 @@ public class DOMXMLParser
 	{
 		if(map.containsKey(tagName))
 		{
-			// System.out.println("Opa");
 			Object mappedTo = map.get(tagName);
 			LinkedList<Object> list;
 			if(mappedTo instanceof LinkedList<?>)
@@ -49,7 +48,7 @@ public class DOMXMLParser
 			}
 			else
 			{
-				list = new LinkedList<Object>();
+				list = new LinkedList<>();
 				map.put(tagName, list);
 				list.add(map.get(tagName));
 			}
@@ -65,12 +64,11 @@ public class DOMXMLParser
 	{
 		if(!hasChildElements(el))
 		{
-			// System.out.printf("%s: %s\n", el.getTagName(), el.getNodeValue());
 			addTagToHashMap(map, el.getTagName(), getTextValue(el));
 		}
 		else
 		{
-			HashMap<String, Object> submap = new HashMap<String, Object>();
+			HashMap<String, Object> submap = new HashMap<>();
 			NodeList childs = el.getChildNodes();
 			for(int i = 0; i < childs.getLength(); i++)
 			{
@@ -92,7 +90,7 @@ public class DOMXMLParser
 		}
 		catch(Exception ex)
 		{
-			System.err.println(ex);
+			System.err.println(ex.getMessage());
 		}
 	}
 
@@ -101,9 +99,9 @@ public class DOMXMLParser
 		this.in = in;
 	}
 
-	public HashMap<String, Object> parse()
+	public Map<String, Object> parse()
 	{
-		HashMap<String, Object> res = new HashMap<String, Object>();
+		HashMap<String, Object> res = new HashMap<>();
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder;
 		Document doc;
@@ -113,8 +111,8 @@ public class DOMXMLParser
 		}
 		catch(Exception ex)
 		{
-			System.out.println(ex);
-			return null;
+			System.out.println(ex.getMessage());
+			return Collections.emptyMap();
 		}
 
 		try
@@ -123,8 +121,8 @@ public class DOMXMLParser
 		}
 		catch(Exception ex)
 		{
-			System.out.println(ex);
-			return null;
+			System.out.println(ex.getMessage());
+			return Collections.emptyMap();
 		}
 
 

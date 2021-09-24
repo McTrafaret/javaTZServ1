@@ -1,75 +1,68 @@
 package com.udalny.documents;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-public abstract class ServerDocument
-{
-	private HashMap<String, Object> map;
+public abstract class ServerDocument {
+    private final HashMap<String, Object> map;
 
-	protected abstract boolean compareGUID(HashMap<String, Object> map, String GUID);
+    protected abstract boolean compareGUID(HashMap<String, Object> map, String guid);
 
-	public ServerDocument(HashMap<String, Object> map)
-	{
-		this.map = map;
-	}
+    protected ServerDocument(HashMap<String, Object> map) {
+        this.map = map;
+    }
 
-	public HashMap<String, Object> getDocByGUID(String GUID)
-	{
-		Object temp;
-		HashMap<String, Object> ret;
+    public Map<String, Object> getDocByGUID(String guid) {
+        Object temp;
+        HashMap<String, Object> ret;
 
-		if(map == null)
-			return null;
+        if (map == null)
+            return Collections.emptyMap();
 
-		ret = (HashMap<String, Object>) map.get("Docs");
-		temp = ret.get("Doc");
-		if(temp instanceof LinkedList<?>)
-		{
-			LinkedList<HashMap<String, Object>> list =
-				(LinkedList<HashMap<String, Object>>) temp;
-			Iterator<HashMap<String, Object>> iter = list.iterator();
-			iter.next();
-			while(iter.hasNext())
-			{
-				ret = iter.next();
-				if(compareGUID(ret, GUID))
-					return ret;
-			}
-			return null;
-		}
-		else
-		{
-			ret = (HashMap<String, Object>) temp;
-			if(compareGUID(ret, GUID))
-				return ret;
-			else
-				return null;
-		}
-	}
 
-	public LinkedList<HashMap<String, Object>> getListOfDocs()
-	{
-		LinkedList<HashMap<String, Object>> ret;
-		HashMap<String, Object> tempmap;
-		Object temp;
+        ret = (HashMap<String, Object>) map.get("Docs");
+        temp = ret.get("Doc");
+        if (temp instanceof LinkedList<?>) {
+            LinkedList<HashMap<String, Object>> list =
+                    (LinkedList<HashMap<String, Object>>) temp;
+            Iterator<HashMap<String, Object>> iter = list.iterator();
+            iter.next();
+            while (iter.hasNext()) {
+                ret = iter.next();
+                if (compareGUID(ret, guid))
+                    return ret;
+            }
+            return Collections.emptyMap();
+        } else {
+            ret = (HashMap<String, Object>) temp;
+            if (compareGUID(ret, guid))
+                return ret;
+            else
+                return Collections.emptyMap();
+        }
+    }
 
-		if(map == null)
-			return null;
+    public List<HashMap<String, Object>> getListOfDocs() {
+        LinkedList<HashMap<String, Object>> ret;
+        HashMap<String, Object> tempmap;
+        Object temp;
 
-		tempmap = (HashMap<String, Object>) map.get("Docs");
-		temp = tempmap.get("Doc");
-		if(temp instanceof LinkedList<?>)
-		{
-			return (LinkedList<HashMap<String, Object>>) temp;
-		}
-		else
-		{
-			ret = new LinkedList<HashMap<String, Object>>();
-			ret.add((HashMap<String, Object>) temp);
-		}
+        if (map == null)
+            return Collections.emptyList();
 
-		return ret;
-	}
+        tempmap = (HashMap<String, Object>) map.get("Docs");
+        temp = tempmap.get("Doc");
+        if (temp instanceof LinkedList<?>) {
+            return (LinkedList<HashMap<String, Object>>) temp;
+        } else {
+            ret = new LinkedList<>();
+            ret.add((HashMap<String, Object>) temp);
+        }
+
+        return ret;
+    }
 }
