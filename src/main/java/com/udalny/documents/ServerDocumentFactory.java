@@ -1,9 +1,10 @@
 package com.udalny.documents;
 
+import com.udalny.documents.paydocs.PayDocs;
+import com.udalny.documents.report.Report;
 import com.udalny.xml.DOMXMLParser;
 
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.Map;
 
 public class ServerDocumentFactory {
@@ -12,9 +13,9 @@ public class ServerDocumentFactory {
 
     public static ServerDocument getDocument(Map<String, Object> map) {
         if (map.containsKey(PAY_DOCS_TAG))
-            return new PayDocs((HashMap<String, Object>) map.get(PAY_DOCS_TAG));
+            return new PayDocs((Map<String, Object>) map.get(PAY_DOCS_TAG));
         else if (map.containsKey(REPORT_TAG))
-            return new Report((HashMap<String, Object>) map.get(REPORT_TAG));
+            return new Report((Map<String, Object>) map.get(REPORT_TAG));
 
         return null;
     }

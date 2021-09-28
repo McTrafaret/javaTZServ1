@@ -1,5 +1,8 @@
 package com.udalny.documents;
 
+import com.udalny.documents.paydocs.PayDocs;
+import com.udalny.documents.report.Report;
+
 public class DocumentPair {
     private final Report report;
     private final PayDocs paydocs;

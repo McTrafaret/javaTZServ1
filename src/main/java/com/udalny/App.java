@@ -7,9 +7,6 @@ import com.udalny.documents.ZipHandler;
 
 import java.util.List;
 
-/**
- * Hello world!
- */
 public class App {
     public static void main(String[] args) {
         if (args.length < 1) {
@@ -17,16 +14,14 @@ public class App {
             return;
         }
 
-        DocumentPair pair;
-        ZipHandler zipHandler = new ZipHandler(args[0]);
         try {
-            pair = zipHandler.getDocuments();
+            ZipHandler zipHandler = new ZipHandler(args[0]);
+            DocumentPair documentPair = zipHandler.getDocuments();
+            List<SummaryDocument> list = SummaryDocumentFactory.createListOfSummaryDocuments(documentPair);
+            System.out.print(list);
         } catch (Exception ex) {
-            System.err.println(ex.getMessage());
-            return;
+            System.err.println(ex);
         }
-        List<SummaryDocument> sum = SummaryDocumentFactory.getListOfSummaryDocuments(pair);
-        System.out.println(sum);
 
     }
 }

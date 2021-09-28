@@ -1,56 +1,42 @@
 package com.udalny.documents;
 
+import com.udalny.documents.paydocs.PayDocs;
+import com.udalny.documents.report.Report;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
 public class SummaryDocumentFactory {
-    private static String getGUIDFromDoc(HashMap<String, Object> map) {
-        if (map.containsKey("GUID")) {
-            return (String) map.get("GUID");
-        } else
-            return (String) map.get("DocGUID");
-    }
 
-    private static HashMap<String, HashMap<String, Object>> mapGUIDToDocs(List<HashMap<String, Object>> docs) {
-        Iterator<HashMap<String, Object>> iter = docs.iterator();
-        HashMap<String, HashMap<String, Object>> res = new HashMap<>();
-
-        iter.next();
-        while (iter.hasNext()) {
-            HashMap<String, Object> map = iter.next();
-            res.put(getGUIDFromDoc(map), map);
-        }
-
-        return res;
-    }
-
-    public static List<SummaryDocument> getListOfSummaryDocuments(Report report, PayDocs paydocs) {
+    public static List<SummaryDocument> createListOfSummaryDocuments(Report report, PayDocs paydocs) {
         LinkedList<SummaryDocument> list = new LinkedList<>();
 
-        List<HashMap<String, Object>> reportDocs = report.getListOfDocs();
-        List<HashMap<String, Object>> paydocsDocs = paydocs.getListOfDocs();
+        List<com.udalny.documents.report.Doc> reportDocs = report.getDocs();
+        List<com.udalny.documents.paydocs.Doc> payDocs = paydocs.getDocs();
 
-        HashMap<String, HashMap<String, Object>> guidmap = mapGUIDToDocs(paydocsDocs);
+        HashMap<String, com.udalny.documents.report.Doc> guidMap = new HashMap<>();
 
-        Iterator<HashMap<String, Object>> iter = reportDocs.iterator();
+        Iterator<com.udalny.documents.report.Doc> i = reportDocs.iterator();
+        while (i.hasNext()) {
+            com.udalny.documents.report.Doc doc = i.next();
+            guidMap.put(doc.getDocGUID(), doc);
+        }
 
-        iter.next();
+        Iterator<com.udalny.documents.paydocs.Doc> iter = payDocs.iterator();
         while (iter.hasNext()) {
-            HashMap<String, Object> map = iter.next();
-            String reportGUID = getGUIDFromDoc(map);
-            if (guidmap.containsKey(reportGUID)) {
-                SummaryDocument summary = new SummaryDocument(map, guidmap.get(reportGUID));
-                list.add(summary);
+            com.udalny.documents.paydocs.Doc doc = iter.next();
+            if (guidMap.containsKey(doc.getGUID())) {
+               list.add(new SummaryDocument(doc, guidMap.get(doc.getGUID())));
             }
         }
 
         return list;
     }
 
-    public static List<SummaryDocument> getListOfSummaryDocuments(DocumentPair pair) {
-        return getListOfSummaryDocuments(pair.getReport(), pair.getPayDocs());
+    public static List<SummaryDocument> createListOfSummaryDocuments(DocumentPair pair) {
+        return createListOfSummaryDocuments(pair.getReport(), pair.getPayDocs());
     }
 
     private SummaryDocumentFactory() {
