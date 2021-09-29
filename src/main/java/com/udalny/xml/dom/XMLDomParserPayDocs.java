@@ -1,6 +1,7 @@
 package com.udalny.xml.dom;
 
 import com.udalny.documents.paydocs.*;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -10,17 +11,14 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class XMLDomParserPayDocs
-        extends XMLDomParser {
+        extends XMLDomParser
+        implements XMLParser<PayDocs> {
 
     static final String PAYDOCS_TAG = "Inf_Pay_Doc";
     static final String NOT_PAYDOCS_ERROR = "The file is not a valid PayDocs document";
 
-    public XMLDomParserPayDocs(String filename) {
-        super(filename);
-    }
-
-    public XMLDomParserPayDocs(InputStream in) {
-        super(in);
+    public XMLDomParserPayDocs() {
+        super();
     }
 
     private InfPay parseInfPay(Element el) {
@@ -103,13 +101,10 @@ public class XMLDomParserPayDocs
     }
 
 
-    public PayDocs parse() throws Exception {
+    @Override
+    public PayDocs parse(Document doc) {
         PayDocs paydocs = new PayDocs();
         Element root = doc.getDocumentElement();
-
-        if (!root.getTagName().equals(PAYDOCS_TAG)) {
-            throw new Exception(NOT_PAYDOCS_ERROR);
-        }
 
         NodeList rootChildren = root.getChildNodes();
 
@@ -129,5 +124,10 @@ public class XMLDomParserPayDocs
 
         return paydocs;
 
+    }
+
+    @Override
+    public boolean applied(Document doc) {
+        return doc.getDocumentElement().getTagName().equals(PAYDOCS_TAG);
     }
 }

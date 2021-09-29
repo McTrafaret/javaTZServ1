@@ -2,58 +2,16 @@ package com.udalny.xml.dom;
 
 import com.udalny.util.ObjectMapper;
 import org.apache.log4j.Logger;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-
 public abstract class XMLDomParser {
 
     protected Logger logger;
-    protected Document doc;
 
-    protected Document createDocument(InputStream in) {
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder;
-        Document ret;
-        try {
-            builder = factory.newDocumentBuilder();
-        } catch (ParserConfigurationException ex) {
-            logger.error(ex);
-            return null;
-        }
 
-        try {
-            ret = builder.parse(in);
-        } catch (Exception ex) {
-            logger.error(ex);
-            return null;
-        }
-
-        return ret;
-    }
-
-    protected XMLDomParser(String filename) {
-        InputStream in;
-        try {
-            in = new FileInputStream(filename);
-        } catch (FileNotFoundException ex) {
-            logger.error(ex);
-            return;
-        }
-        doc = createDocument(in);
-        logger = Logger.getLogger(this.getClass());
-    }
-
-    protected XMLDomParser(InputStream in) {
-        doc = createDocument(in);
+    protected XMLDomParser() {
         logger = Logger.getLogger(this.getClass());
     }
 

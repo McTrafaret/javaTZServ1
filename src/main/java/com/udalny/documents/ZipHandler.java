@@ -1,5 +1,6 @@
 package com.udalny.documents;
 
+import com.udalny.xml.dom.DocConverter;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -57,8 +58,8 @@ public class ZipHandler {
         }
 
         try {
-            a = ServerDocumentFactory.getDocument(zip.getInputStream(temp.get(0)));
-            b = ServerDocumentFactory.getDocument(zip.getInputStream(temp.get(1)));
+            a = DocConverter.getInstance().parse(zip.getInputStream(temp.get(0)));
+            b = DocConverter.getInstance().parse(zip.getInputStream(temp.get(1)));
         } catch (Exception ex) {
             logger.error("Can't parse");
             return null;

@@ -3,6 +3,7 @@ package com.udalny.xml.dom;
 import com.udalny.documents.report.Doc;
 import com.udalny.documents.report.Report;
 import com.udalny.documents.report.StmInfrmtnTF;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -12,17 +13,14 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class XMLDomParserReport
-        extends XMLDomParser {
+        extends XMLDomParser
+        implements XMLParser<Report> {
 
     static final String REPORT_TAG = "SKP_REPORT_KS";
     static final String NOT_REPORT_ERROR = "The file is not valid Report document";
 
-    public XMLDomParserReport(String filename) {
-        super(filename);
-    }
-
-    public XMLDomParserReport(InputStream in) {
-        super(in);
+    public XMLDomParserReport() {
+        super();
     }
 
     public Doc parseDoc(Element el) {
@@ -63,13 +61,10 @@ public class XMLDomParserReport
         return docs;
     }
 
-    public Report parse() throws Exception {
+    @Override
+    public Report parse(Document doc) {
         Report report = new Report();
         Element root = doc.getDocumentElement();
-
-        if (!root.getTagName().equals(REPORT_TAG)) {
-            throw new Exception(NOT_REPORT_ERROR);
-        }
 
         NodeList rootChildren = root.getChildNodes();
 
@@ -94,4 +89,8 @@ public class XMLDomParserReport
 
     }
 
+    @Override
+    public boolean applied(Document doc) {
+        return doc.getDocumentElement().getTagName().equals(REPORT_TAG);
+    }
 }

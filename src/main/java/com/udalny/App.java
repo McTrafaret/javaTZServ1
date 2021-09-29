@@ -1,8 +1,11 @@
 package com.udalny;
 
-import com.udalny.documents.paydocs.PayDocs;
-import com.udalny.xml.dom.XMLDomParserPayDocs;
+import com.udalny.documents.SummaryDocument;
+import com.udalny.documents.SummaryDocumentFactory;
+import com.udalny.documents.ZipHandler;
 import org.apache.log4j.Logger;
+
+import java.util.List;
 
 public class App {
 
@@ -15,10 +18,9 @@ public class App {
         }
 
         try {
-            XMLDomParserPayDocs parser = new XMLDomParserPayDocs(args[0]);
-            PayDocs report = parser.parse();
-            logger.info(report);
-            logger.info(report.getDocs().size());
+            ZipHandler zipHandler = new ZipHandler(args[0]);
+            List<SummaryDocument>  list = SummaryDocumentFactory.createListOfSummaryDocuments(zipHandler.getDocuments());
+            logger.info(list);
         } catch (Exception ex) {
             logger.error(ex);
         }
