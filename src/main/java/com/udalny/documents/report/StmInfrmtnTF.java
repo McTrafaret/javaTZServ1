@@ -1,11 +1,14 @@
 package com.udalny.documents.report;
 
-import com.udalny.documents.ObjectMapper;
+import com.udalny.util.ObjectMapper;
 
 import java.util.Map;
 
 public class StmInfrmtnTF {
     String GUID;
+
+    public StmInfrmtnTF() {
+    }
 
     public StmInfrmtnTF(Map<String, Object> map) {
         ObjectMapper.map(this, map);

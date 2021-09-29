@@ -1,6 +1,6 @@
 package com.udalny.documents.report;
 
-import com.udalny.documents.ObjectMapper;
+import com.udalny.util.ObjectMapper;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -35,6 +35,9 @@ public class Doc
         }
 
         return ret;
+    }
+
+    public Doc() {
     }
 
     public Doc(Map<String, Object> map) {

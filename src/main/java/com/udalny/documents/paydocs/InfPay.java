@@ -1,6 +1,6 @@
 package com.udalny.documents.paydocs;
 
-import com.udalny.documents.ObjectMapper;
+import com.udalny.util.ObjectMapper;
 
 import java.util.Map;
 
@@ -8,6 +8,9 @@ public class InfPay {
     private String INN_PAY;
     private String KPP_PAY;
     private String CName_PAY;
+
+    public InfPay() {
+    }
 
     public InfPay(Map<String, Object> map) {
         ObjectMapper.map(this, map);

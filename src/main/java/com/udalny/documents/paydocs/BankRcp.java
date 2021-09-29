@@ -1,6 +1,6 @@
 package com.udalny.documents.paydocs;
 
-import com.udalny.documents.ObjectMapper;
+import com.udalny.util.ObjectMapper;
 
 import java.util.Map;
 
@@ -8,6 +8,9 @@ public class BankRcp {
     private String BS_PAY;
     private String BIC_PAY;
     private String BS_KS_PAY;
+
+    public BankRcp() {
+    }
 
     public BankRcp(Map<String, Object> map) {
         ObjectMapper.map(this, map);

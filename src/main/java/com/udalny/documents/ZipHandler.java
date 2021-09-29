@@ -1,5 +1,7 @@
 package com.udalny.documents;
 
+import org.apache.log4j.Logger;
+
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Iterator;
@@ -13,6 +15,7 @@ public class ZipHandler {
     ZipFile zip;
     LinkedList<ZipEntry> entriesList;
     private static final String CONTENTS_ERROR = "Not valid format of zip file(need two xml documents)";
+    static Logger logger = Logger.getLogger(ZipHandler.class);
 
     private void leaveOnlyXMLInEntriesList(LinkedList<ZipEntry> list) {
         Iterator<ZipEntry> iter = list.iterator();
@@ -57,7 +60,7 @@ public class ZipHandler {
             a = ServerDocumentFactory.getDocument(zip.getInputStream(temp.get(0)));
             b = ServerDocumentFactory.getDocument(zip.getInputStream(temp.get(1)));
         } catch (Exception ex) {
-            System.err.println("Can't parse");
+            logger.error("Can't parse");
             return null;
         }
 

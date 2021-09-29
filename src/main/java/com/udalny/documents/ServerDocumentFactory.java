@@ -2,7 +2,7 @@ package com.udalny.documents;
 
 import com.udalny.documents.paydocs.PayDocs;
 import com.udalny.documents.report.Report;
-import com.udalny.xml.DOMXMLParser;
+import com.udalny.xml.XMLtoMapParser;
 
 import java.io.InputStream;
 import java.util.Map;
@@ -21,13 +21,13 @@ public class ServerDocumentFactory {
     }
 
     public static ServerDocument getDocument(String xmlFilename) {
-        DOMXMLParser parser = new DOMXMLParser(xmlFilename);
+        XMLtoMapParser parser = new XMLtoMapParser(xmlFilename);
         Map<String, Object> map = parser.parse();
         return getDocument(map);
     }
 
     public static ServerDocument getDocument(InputStream in) {
-        DOMXMLParser parser = new DOMXMLParser(in);
+        XMLtoMapParser parser = new XMLtoMapParser(in);
         Map<String, Object> map = parser.parse();
         return getDocument(map);
     }

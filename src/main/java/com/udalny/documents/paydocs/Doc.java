@@ -1,6 +1,6 @@
 package com.udalny.documents.paydocs;
 
-import com.udalny.documents.ObjectMapper;
+import com.udalny.util.ObjectMapper;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -49,6 +49,9 @@ public class Doc
         return ret;
     }
 
+    public Doc() {
+    }
+
     public Doc(Map<String, Object> map) {
         ObjectMapper.map(this, map);
 
@@ -64,6 +67,22 @@ public class Doc
         Map<String, Object> bankRcpMap = (Map<String, Object>) map.get("Bank_RCP");
         Bank_RCP = new BankRcp(bankRcpMap);
 
+    }
+
+    public void setInf_PAY(InfPay inf_PAY) {
+        Inf_PAY = inf_PAY;
+    }
+
+    public void setBank_PAY(BankPay bank_PAY) {
+        Bank_PAY = bank_PAY;
+    }
+
+    public void setInf_RCP(InfRcp inf_RCP) {
+        Inf_RCP = inf_RCP;
+    }
+
+    public void setBank_RCP(BankRcp bank_RCP) {
+        Bank_RCP = bank_RCP;
     }
 
     public int getNum() {

@@ -1,6 +1,6 @@
 package com.udalny.documents.report;
 
-import com.udalny.documents.ObjectMapper;
+import com.udalny.util.ObjectMapper;
 import com.udalny.documents.ServerDocument;
 
 import java.math.BigInteger;
@@ -22,6 +22,9 @@ public class Report
     StmInfrmtnTF StmInfrmtn_TF;
     List<Doc> Docs;
 
+    public Report() {
+    }
+
     public Report(Map<String, Object> map) {
 
         ObjectMapper.map(this, map);
@@ -31,6 +34,14 @@ public class Report
 
         Map<String, Object> stmMap = (Map<String, Object>) map.get("StmInfrmtn_TF");
         StmInfrmtn_TF = new StmInfrmtnTF(stmMap);
+    }
+
+    public void setStmInfrmtn_TF(StmInfrmtnTF stmInfrmtn_TF) {
+        StmInfrmtn_TF = stmInfrmtn_TF;
+    }
+
+    public void setDocs(List<Doc> docs) {
+        Docs = docs;
     }
 
     public BigInteger getDocNum() {

@@ -1,6 +1,6 @@
 package com.udalny.documents.paydocs;
 
-import com.udalny.documents.ObjectMapper;
+import com.udalny.util.ObjectMapper;
 import com.udalny.documents.ServerDocument;
 
 import java.util.Date;
@@ -17,12 +17,19 @@ public class PayDocs
     int Kol_Doc;
     List<Doc> Docs;
 
+    public PayDocs() {
+    }
+
     public PayDocs(Map<String, Object> map) {
 
         ObjectMapper.map(this, map);
 
         Map<String, Object> docMap = (Map<String, Object>) map.get("Docs");
         Docs = Doc.parseDocs(docMap);
+    }
+
+    public void setDocs(List<Doc> docs) {
+        Docs = docs;
     }
 
     public String getGUID_Doc() {

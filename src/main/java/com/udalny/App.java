@@ -1,26 +1,26 @@
 package com.udalny;
 
-import com.udalny.documents.DocumentPair;
-import com.udalny.documents.SummaryDocument;
-import com.udalny.documents.SummaryDocumentFactory;
-import com.udalny.documents.ZipHandler;
-
-import java.util.List;
+import com.udalny.documents.paydocs.PayDocs;
+import com.udalny.xml.dom.XMLDomParserPayDocs;
+import org.apache.log4j.Logger;
 
 public class App {
+
+    static Logger logger = Logger.getLogger(App.class);
+
     public static void main(String[] args) {
         if (args.length < 1) {
-            System.err.println("Please specify zip file");
+            logger.error("Xml file not specified.");
             return;
         }
 
         try {
-            ZipHandler zipHandler = new ZipHandler(args[0]);
-            DocumentPair documentPair = zipHandler.getDocuments();
-            List<SummaryDocument> list = SummaryDocumentFactory.createListOfSummaryDocuments(documentPair);
-            System.out.print(list);
+            XMLDomParserPayDocs parser = new XMLDomParserPayDocs(args[0]);
+            PayDocs report = parser.parse();
+            logger.info(report);
+            logger.info(report.getDocs().size());
         } catch (Exception ex) {
-            System.err.println(ex);
+            logger.error(ex);
         }
 
     }
