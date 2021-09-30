@@ -1,10 +1,15 @@
 package com.udalny.documents.report;
 
 import com.udalny.util.ObjectMapper;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.math.BigDecimal;
 import java.util.*;
 
+@XmlRootElement(name = "Doc")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Doc
         implements Comparable<com.udalny.documents.paydocs.Doc> {
     int Line_Num;

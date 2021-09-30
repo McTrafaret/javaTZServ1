@@ -1,11 +1,16 @@
 package com.udalny.documents.paydocs;
 
 import com.udalny.util.ObjectMapper;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.*;
 
+@XmlRootElement(name = "Doc")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Doc
         implements Comparable<com.udalny.documents.report.Doc> {
 

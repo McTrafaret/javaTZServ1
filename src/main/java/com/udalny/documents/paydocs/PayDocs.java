@@ -1,12 +1,15 @@
 package com.udalny.documents.paydocs;
 
-import com.udalny.util.ObjectMapper;
 import com.udalny.documents.ServerDocument;
+import com.udalny.util.ObjectMapper;
+import jakarta.xml.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "Inf_Pay_Doc")
 public class PayDocs
         extends ServerDocument {
 
@@ -15,6 +18,8 @@ public class PayDocs
     String Scrc;
     String Vid_Otch;
     int Kol_Doc;
+    @XmlElementWrapper(name = "Docs")
+    @XmlElement(name = "Doc", type = Doc.class)
     List<Doc> Docs;
 
     public PayDocs() {

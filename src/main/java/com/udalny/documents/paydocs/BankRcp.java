@@ -1,9 +1,14 @@
 package com.udalny.documents.paydocs;
 
 import com.udalny.util.ObjectMapper;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Map;
 
+@XmlRootElement(name = "Bank_RCP")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class BankRcp {
     private String BS_PAY;
     private String BIC_PAY;

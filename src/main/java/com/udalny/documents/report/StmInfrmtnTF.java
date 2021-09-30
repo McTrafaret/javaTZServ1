@@ -1,9 +1,14 @@
 package com.udalny.documents.report;
 
 import com.udalny.util.ObjectMapper;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Map;
 
+@XmlRootElement(name = "StmInfrmtn_TF")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class StmInfrmtnTF {
     String GUID;
 

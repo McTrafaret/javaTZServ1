@@ -1,9 +1,14 @@
 package com.udalny.documents.paydocs;
 
 import com.udalny.util.ObjectMapper;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Map;
 
+@XmlRootElement(name = "Inf_RCP")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class InfRcp {
     private String INN_PAY;
     private String KPP_PAY;

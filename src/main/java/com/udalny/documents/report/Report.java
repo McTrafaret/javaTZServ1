@@ -1,13 +1,16 @@
 package com.udalny.documents.report;
 
-import com.udalny.util.ObjectMapper;
 import com.udalny.documents.ServerDocument;
+import com.udalny.util.ObjectMapper;
+import jakarta.xml.bind.annotation.*;
 
 import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+@XmlRootElement(name = "SKP_REPORT_KS")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Report
         extends ServerDocument {
 
@@ -20,6 +23,8 @@ public class Report
     String Executor_SFP;
     String Executor_Post;
     StmInfrmtnTF StmInfrmtn_TF;
+    @XmlElementWrapper(name = "Docs")
+    @XmlElement(name = "Doc", type = Doc.class)
     List<Doc> Docs;
 
     public Report() {

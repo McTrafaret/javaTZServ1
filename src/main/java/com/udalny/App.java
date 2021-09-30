@@ -19,7 +19,7 @@ public class App {
 
         try {
             ZipHandler zipHandler = new ZipHandler(args[0]);
-            List<SummaryDocument>  list = SummaryDocumentFactory.createListOfSummaryDocuments(zipHandler.getDocuments());
+            List<SummaryDocument> list = SummaryDocumentFactory.createListOfSummaryDocuments(zipHandler.getDocuments());
             logger.info(list);
         } catch (Exception ex) {
             logger.error(ex);

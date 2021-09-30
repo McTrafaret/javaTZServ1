@@ -1,6 +1,6 @@
 package com.udalny.documents;
 
-import com.udalny.xml.dom.DocConverter;
+import com.udalny.xml.jaxb.DocConverter;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
