@@ -15,6 +15,11 @@ public class ParseException
         this.filename = null;
     }
 
+    public ParseException(Throwable cause) {
+        super(cause);
+        this.filename = null;
+    }
+
     public ParseException(String message, Throwable cause) {
         super(message, cause);
         this.filename = null;

@@ -1,11 +1,14 @@
 package com.udalny.xml.jaxb;
 
+import com.udalny.documents.exceptions.ParseException;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,25 +19,12 @@ public final class DocConverter {
     private static final DocConverter instance = new DocConverter();
     private Set<XMLParser<?>> parsers = new HashSet<>();
 
-    private Document createDocument(InputStream in) {
+    private Document createDocument(InputStream in)
+    throws IOException, ParserConfigurationException, SAXException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder;
-        Document ret;
-        try {
-            builder = factory.newDocumentBuilder();
-        } catch (ParserConfigurationException ex) {
-            logger.error(ex);
-            return null;
-        }
+        DocumentBuilder builder = factory.newDocumentBuilder();
 
-        try {
-            ret = builder.parse(in);
-        } catch (Exception ex) {
-            logger.error(ex);
-            return null;
-        }
-
-        return ret;
+        return builder.parse(in);
     }
 
     private DocConverter() {
@@ -46,13 +36,18 @@ public final class DocConverter {
         return instance;
     }
 
-    public <T> T parse(InputStream in) {
-        Document doc = createDocument(in);
-        for(XMLParser<?> parser : parsers) {
-            if(parser.applied(doc)) {
-                return (T) parser.parse(doc);
+    public <T> T parse(InputStream in)
+    throws ParseException {
+        try {
+            Document doc = createDocument(in);
+            for (XMLParser<?> parser : parsers) {
+                if (parser.applied(doc)) {
+                    return (T) parser.parse(doc);
+                }
             }
+        } catch (Exception ex) {
+            throw new ParseException(ex);
         }
-        return null;
+        throw new ParseException("The file is not applicable to any of the parsers.");
     }
 }
