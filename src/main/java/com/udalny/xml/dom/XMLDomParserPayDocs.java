@@ -1,12 +1,12 @@
 package com.udalny.xml.dom;
 
+import com.udalny.documents.exceptions.FieldMapException;
 import com.udalny.documents.paydocs.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -72,7 +72,11 @@ public class XMLDomParserPayDocs
                 } else if (child.getTagName().equals("Bank_RCP")) {
                     res.setBank_RCP(parseBankRcp(child));
                 } else {
-                    checkFieldAndSet(res, child);
+                    try {
+                        checkFieldAndSet(res, child);
+                    } catch(FieldMapException ex) {
+                        logger.error(ex);
+                    }
                 }
             }
         }
@@ -117,7 +121,11 @@ public class XMLDomParserPayDocs
                     paydocs.setDocs(parseDocs(child));
 
                 else {
-                    checkFieldAndSet(paydocs, child);
+                    try {
+                        checkFieldAndSet(paydocs, child);
+                    } catch (FieldMapException ex) {
+                        logger.error(ex);
+                    }
                 }
             }
         }

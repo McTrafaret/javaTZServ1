@@ -1,5 +1,7 @@
 package com.udalny.documents;
 
+import com.udalny.documents.exceptions.InvalidZipContentsException;
+import com.udalny.documents.exceptions.ParseException;
 import com.udalny.xml.jaxb.DocConverter;
 import org.apache.log4j.Logger;
 
@@ -15,7 +17,6 @@ import java.util.zip.ZipFile;
 public class ZipHandler {
     ZipFile zip;
     LinkedList<ZipEntry> entriesList;
-    private static final String CONTENTS_ERROR = "Not valid format of zip file(need two xml documents)";
     static Logger logger = Logger.getLogger(ZipHandler.class);
 
     private void leaveOnlyXMLInEntriesList(LinkedList<ZipEntry> list) {
@@ -32,12 +33,10 @@ public class ZipHandler {
         }
     }
 
-    public ZipHandler(String filename) {
-        try {
-            zip = new ZipFile(filename);
-        } catch (IOException ignored) {
+    public ZipHandler(String filename)
+            throws IOException {
 
-        }
+        zip = new ZipFile(filename);
 
         entriesList = new LinkedList<>();
         Enumeration<? extends ZipEntry> e = zip.entries();
@@ -48,22 +47,17 @@ public class ZipHandler {
     }
 
     public DocumentPair getDocuments()
-            throws Exception {
+            throws InvalidZipContentsException, ParseException, IOException {
         ServerDocument a;
         ServerDocument b;
         LinkedList<ZipEntry> temp = new LinkedList<>(entriesList);
         leaveOnlyXMLInEntriesList(temp);
         if (temp.size() != 2) {
-            throw new Exception(CONTENTS_ERROR);
+            throw new InvalidZipContentsException();
         }
 
-        try {
-            a = DocConverter.getInstance().parse(zip.getInputStream(temp.get(0)));
-            b = DocConverter.getInstance().parse(zip.getInputStream(temp.get(1)));
-        } catch (Exception ex) {
-            logger.error("Can't parse");
-            return null;
-        }
+        a = DocConverter.getInstance().parse(zip.getInputStream(temp.get(0)));
+        b = DocConverter.getInstance().parse(zip.getInputStream(temp.get(1)));
 
         return new DocumentPair(a, b);
     }

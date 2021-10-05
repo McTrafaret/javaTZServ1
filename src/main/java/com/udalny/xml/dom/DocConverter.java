@@ -1,5 +1,6 @@
 package com.udalny.xml.dom;
 
+import com.udalny.documents.exceptions.ParseException;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 
@@ -46,13 +47,15 @@ public final class DocConverter {
         return instance;
     }
 
-    public <T> T parse(InputStream in) {
+    public <T> T parse(InputStream in)
+            throws ParseException {
         Document doc = createDocument(in);
-        for(XMLParser<?> parser : parsers) {
-            if(parser.applied(doc)) {
+        for (XMLParser<?> parser : parsers) {
+            if (parser.applied(doc)) {
                 return (T) parser.parse(doc);
             }
         }
-        return null;
+        throw new ParseException("The file is not applicable to any of the parsers.");
+
     }
 }

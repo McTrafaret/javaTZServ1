@@ -13,7 +13,7 @@ public class App {
 
     public static void main(String[] args) {
         if (args.length < 1) {
-            logger.error("Xml file not specified.");
+            logger.error("Zip file not specified.");
             return;
         }
 

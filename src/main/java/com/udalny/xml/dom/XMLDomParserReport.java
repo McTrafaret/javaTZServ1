@@ -1,5 +1,6 @@
 package com.udalny.xml.dom;
 
+import com.udalny.documents.exceptions.FieldMapException;
 import com.udalny.documents.report.Doc;
 import com.udalny.documents.report.Report;
 import com.udalny.documents.report.StmInfrmtnTF;
@@ -8,7 +9,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -80,7 +80,11 @@ public class XMLDomParserReport
                     report.setStmInfrmtn_TF(parseStmInfrmtn(child));
 
                 else {
-                    checkFieldAndSet(report, child);
+                    try {
+                        checkFieldAndSet(report, child);
+                    } catch (FieldMapException ex) {
+                        logger.error(ex);
+                    }
                 }
             }
         }

@@ -1,11 +1,11 @@
 package com.udalny.util;
 
+import com.udalny.documents.exceptions.FieldMapException;
 import org.apache.log4j.Logger;
 
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
@@ -19,7 +19,7 @@ public class ObjectMapper {
     }
 
     public static void mapStringValueToField(Object obj, String fieldName, String fieldValue)
-            throws NoSuchFieldException {
+            throws FieldMapException {
 
         Class<? extends Object> cl = obj.getClass();
         Field f;
@@ -27,73 +27,60 @@ public class ObjectMapper {
         try {
             f = cl.getDeclaredField(fieldName);
         } catch (NoSuchFieldException ex) {
-            logger.error(ex);
-            throw ex;
+            throw new FieldMapException("No such field " + fieldName);
         }
 
         SimpleDateFormat dateFormatter = new SimpleDateFormat(DATE_FORMAT);
         f.setAccessible(true);
 
-        if (f.getType() == String.class) {
+        try {
+            if (f.getType() == String.class) {
 
-            try {
                 f.set(obj, fieldValue);
-            } catch (IllegalAccessException ex) {
-            }
 
-        } else if (f.getType() == Date.class) {
+            } else if (f.getType() == Date.class) {
 
-            try {
                 f.set(obj, dateFormatter.parse(fieldValue));
-            } catch (ParseException ex) {
-            } catch (IllegalAccessException ex) {
-            }
 
-        } else if (f.getType() == int.class) {
+            } else if (f.getType() == int.class) {
 
-            try {
                 f.setInt(obj, Integer.parseInt(fieldValue));
-            } catch (IllegalAccessException ex) {
-            }
 
-        } else if (f.getType() == BigDecimal.class) {
+            } else if (f.getType() == BigDecimal.class) {
 
-            try {
                 f.set(obj, new BigDecimal(fieldValue));
-            } catch (IllegalAccessException ex) {
-            }
 
-        } else if (f.getType() == BigInteger.class) {
+            } else if (f.getType() == BigInteger.class) {
 
-            try {
                 f.set(obj, new BigInteger(fieldValue));
-            } catch (IllegalAccessException ex) {
             }
+        } catch (Exception ex) {
+            throw new FieldMapException(f, fieldValue, ex);
         }
+
     }
 
     public static void map(Object obj, Map<String, Object> map) {
 
         Class<? extends Object> cl = obj.getClass();
         Field[] fields = cl.getDeclaredFields();
-        SimpleDateFormat dateFormatter = new SimpleDateFormat(DATE_FORMAT);
 
         for (Field f : fields) {
 
             f.setAccessible(true);
+            String fieldName = f.getName();
 
-            if (map.containsKey(f.getName())) {
+            if (map.containsKey(fieldName) && map.get(fieldName) instanceof String) {
 
-                if (map.get(f.getName()) instanceof String) {
-                    String val = (String) map.get(f.getName());
-                    try {
-                        mapStringValueToField(obj, f.getName(), val);
-                    } catch (Exception ex) {
-                        /* this can't happen */
-                    }
+                String val = (String) map.get(fieldName);
+
+                try {
+                    mapStringValueToField(obj, fieldName, val);
+                } catch (FieldMapException ex) {
+                    logger.error(ex);
                 }
             }
-
         }
+
     }
 }

@@ -1,5 +1,6 @@
 package com.udalny.xml.dom;
 
+import com.udalny.documents.exceptions.FieldMapException;
 import com.udalny.util.ObjectMapper;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Element;
@@ -40,20 +41,18 @@ public abstract class XMLDomParser {
         logger.info(String.format(fmt, field));
     }
 
-    protected <T> void checkFieldAndSet(T obj, Element el) {
+    protected <T> void checkFieldAndSet(T obj, Element el)
+            throws FieldMapException {
         if (!hasChildElements(el)) {
-            try {
-                String val = getTextValue(el);
-                if(val.isEmpty()) {
-                    val = el.getAttribute("value");
-                }
-                ObjectMapper.mapStringValueToField(obj, el.getTagName(), val);
-            } catch (NoSuchFieldException ex) {
-                unknownFieldMessage(el.getTagName());
+            String val = getTextValue(el);
+            if (val.isEmpty()) {
+                val = el.getAttribute("value");
             }
+            ObjectMapper.mapStringValueToField(obj, el.getTagName(), val);
         } else {
             unknownFieldMessage(el.getTagName());
         }
+
     }
 
     protected <T> void parseObject(T obj, Element el) {
@@ -61,7 +60,11 @@ public abstract class XMLDomParser {
         NodeList children = el.getChildNodes();
         for (int i = 0; i < children.getLength(); i++) {
             if (children.item(i).getNodeType() == Node.ELEMENT_NODE) {
-                checkFieldAndSet(obj, (Element) children.item(i));
+                try {
+                    checkFieldAndSet(obj, (Element) children.item(i));
+                } catch (FieldMapException ex) {
+                    logger.error(ex);
+                }
             }
         }
     }
