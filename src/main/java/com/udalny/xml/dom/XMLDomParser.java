@@ -1,6 +1,6 @@
 package com.udalny.xml.dom;
 
-import com.udalny.documents.exceptions.FieldMapException;
+import com.udalny.exceptions.FieldMapException;
 import com.udalny.util.ObjectMapper;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Element;

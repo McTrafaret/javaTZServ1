@@ -1,6 +1,6 @@
 package com.udalny.xml.dom;
 
-import com.udalny.documents.exceptions.FieldMapException;
+import com.udalny.exceptions.FieldMapException;
 import com.udalny.documents.paydocs.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

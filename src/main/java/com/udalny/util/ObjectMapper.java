@@ -1,6 +1,6 @@
 package com.udalny.util;
 
-import com.udalny.documents.exceptions.FieldMapException;
+import com.udalny.exceptions.FieldMapException;
 import org.apache.log4j.Logger;
 
 import java.lang.reflect.Field;

@@ -1,6 +1,6 @@
 package com.udalny.xml.dom;
 
-import com.udalny.documents.exceptions.ParseException;
+import com.udalny.exceptions.ParseException;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 

@@ -1,6 +1,6 @@
 package com.udalny.xml.dom;
 
-import com.udalny.documents.exceptions.FieldMapException;
+import com.udalny.exceptions.FieldMapException;
 import com.udalny.documents.report.Doc;
 import com.udalny.documents.report.Report;
 import com.udalny.documents.report.StmInfrmtnTF;

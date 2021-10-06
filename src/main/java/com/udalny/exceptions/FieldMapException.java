@@ -1,4 +1,4 @@
-package com.udalny.documents.exceptions;
+package com.udalny.exceptions;
 
 import java.lang.reflect.Field;
 

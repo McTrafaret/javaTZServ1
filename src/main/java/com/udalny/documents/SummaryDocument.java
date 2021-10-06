@@ -32,6 +32,46 @@ public class SummaryDocument {
         Bank_RCP = payDoc.getBank_RCP();
     }
 
+    public int getDocNum() {
+        return DocNum;
+    }
+
+    public Date getDocDate() {
+        return DocDate;
+    }
+
+    public String getDocGUID() {
+        return DocGUID;
+    }
+
+    public String getOperType() {
+        return OperType;
+    }
+
+    public BigDecimal getAmountOut() {
+        return AmountOut;
+    }
+
+    public String getPurpose() {
+        return Purpose;
+    }
+
+    public InfPay getInf_PAY() {
+        return Inf_PAY;
+    }
+
+    public BankPay getBank_PAY() {
+        return Bank_PAY;
+    }
+
+    public InfRcp getInf_RCP() {
+        return Inf_RCP;
+    }
+
+    public BankRcp getBank_RCP() {
+        return Bank_RCP;
+    }
+
     @Override
     public String toString() {
         return "SummaryDocument{" +

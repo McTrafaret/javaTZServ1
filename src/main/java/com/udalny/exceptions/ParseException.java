@@ -1,4 +1,4 @@
-package com.udalny.documents.exceptions;
+package com.udalny.exceptions;
 
 public class ParseException
         extends Exception {

@@ -1,7 +1,7 @@
 package com.udalny.documents;
 
-import com.udalny.documents.exceptions.InvalidZipContentsException;
-import com.udalny.documents.exceptions.ParseException;
+import com.udalny.exceptions.InvalidZipContentsException;
+import com.udalny.exceptions.ParseException;
 import com.udalny.xml.jaxb.DocConverter;
 import org.apache.log4j.Logger;
 
