@@ -4,6 +4,7 @@ import com.udalny.exceptions.FieldMapException;
 import com.udalny.documents.report.Doc;
 import com.udalny.documents.report.Report;
 import com.udalny.documents.report.StmInfrmtnTF;
+import com.udalny.xml.XMLParser;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;

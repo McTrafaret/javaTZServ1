@@ -1,64 +1,47 @@
 package com.udalny.documents;
 
-import com.udalny.exceptions.InvalidZipContentsException;
-import com.udalny.exceptions.ParseException;
-import com.udalny.xml.jaxb.DocConverter;
 import org.apache.log4j.Logger;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Enumeration;
-import java.util.Iterator;
+import java.io.InputStream;
 import java.util.LinkedList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.List;
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
+import java.util.zip.ZipInputStream;
 
 public class ZipHandler {
-    ZipFile zip;
-    LinkedList<ZipEntry> entriesList;
-    static Logger logger = Logger.getLogger(ZipHandler.class);
 
-    private void leaveOnlyXMLInEntriesList(LinkedList<ZipEntry> list) {
-        Iterator<ZipEntry> iter = list.iterator();
-        Pattern pattern = Pattern.compile(".*\\.xml", Pattern.CASE_INSENSITIVE);
-        iter.next();
-        while (iter.hasNext()) {
-            ZipEntry entry = iter.next();
-            String filename = entry.getName();
-            Matcher m = pattern.matcher(filename);
-            if (!m.matches()) {
-                iter.remove();
-            }
-        }
+    //4. slf4j
+    private static Logger logger = Logger.getLogger(ZipHandler.class);
+
+    private ZipHandler() {
     }
 
-    public ZipHandler(String filename)
+    public static List<String> createListOfFileContents(InputStream in)
             throws IOException {
 
-        zip = new ZipFile(filename);
+        ZipInputStream zipStream = new ZipInputStream(in);
 
-        entriesList = new LinkedList<>();
-        Enumeration<? extends ZipEntry> e = zip.entries();
-        while (e.hasMoreElements()) {
-            ZipEntry entry = e.nextElement();
-            entriesList.add(entry);
-        }
-    }
+        List<String> contentsList = new LinkedList<>();
+        for (ZipEntry entry = zipStream.getNextEntry(); entry != null; entry = zipStream.getNextEntry()) {
 
-    public DocumentPair getDocuments()
-            throws InvalidZipContentsException, ParseException, IOException {
-        ServerDocument a;
-        ServerDocument b;
-        LinkedList<ZipEntry> temp = new LinkedList<>(entriesList);
-        leaveOnlyXMLInEntriesList(temp);
-        if (temp.size() != 2) {
-            throw new InvalidZipContentsException();
+            ByteArrayOutputStream res = new ByteArrayOutputStream();
+            byte[] buffer = new byte[1024];
+
+            int length = 0;
+            do {
+                res.write(buffer, 0, length);
+                length = zipStream.read(buffer);
+            } while (length != -1);
+
+            contentsList.add(res.toString());
+
         }
 
-        a = DocConverter.getInstance().parse(zip.getInputStream(temp.get(0)));
-        b = DocConverter.getInstance().parse(zip.getInputStream(temp.get(1)));
+        return contentsList;
 
-        return new DocumentPair(a, b);
     }
+
+
 }

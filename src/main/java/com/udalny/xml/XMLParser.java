@@ -1,5 +1,11 @@
 package com.udalny.xml;
 
-abstract public class XMLParser
-{
+import com.udalny.exceptions.ParseException;
+import org.w3c.dom.Document;
+
+public interface XMLParser<T> {
+
+    T parse(Document doc) throws ParseException;
+
+    boolean applied(Document doc);
 }

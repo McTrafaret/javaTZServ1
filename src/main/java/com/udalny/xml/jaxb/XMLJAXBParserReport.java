@@ -1,6 +1,8 @@
 package com.udalny.xml.jaxb;
 
 import com.udalny.documents.report.Report;
+import com.udalny.exceptions.ParseException;
+import com.udalny.xml.XMLParser;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Unmarshaller;
@@ -19,10 +21,14 @@ public class XMLJAXBParserReport
 
     @Override
     public Report parse(Document doc)
-    throws JAXBException {
-        JAXBContext jaxbContext = JAXBContext.newInstance(Report.class);
-        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-        return (Report) unmarshaller.unmarshal(doc.getDocumentElement());
+            throws ParseException {
+        try {
+            JAXBContext jaxbContext = JAXBContext.newInstance(Report.class);
+            Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+            return (Report) unmarshaller.unmarshal(doc.getDocumentElement());
+        } catch(JAXBException ex) {
+            throw new ParseException(ex);
+        }
     }
 
     @Override

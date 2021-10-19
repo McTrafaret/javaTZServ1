@@ -9,8 +9,7 @@ import java.util.*;
 import java.io.InputStream;
 import java.io.FileInputStream;
 
-public class XMLtoMapParser
-        extends XMLParser {
+public class XMLtoMapParser {
     private InputStream in;
     static Logger logger = Logger.getLogger(XMLtoMapParser.class);
 

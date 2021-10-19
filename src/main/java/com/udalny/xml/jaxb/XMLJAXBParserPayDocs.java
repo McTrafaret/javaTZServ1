@@ -1,6 +1,8 @@
 package com.udalny.xml.jaxb;
 
 import com.udalny.documents.paydocs.PayDocs;
+import com.udalny.exceptions.ParseException;
+import com.udalny.xml.XMLParser;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Unmarshaller;
@@ -19,10 +21,14 @@ public class XMLJAXBParserPayDocs
 
     @Override
     public PayDocs parse(Document doc)
-    throws JAXBException {
-        JAXBContext jaxbContext = JAXBContext.newInstance(PayDocs.class);
-        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-        return (PayDocs) unmarshaller.unmarshal(doc.getDocumentElement());
+            throws ParseException {
+        try {
+            JAXBContext jaxbContext = JAXBContext.newInstance(PayDocs.class);
+            Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+            return (PayDocs) unmarshaller.unmarshal(doc.getDocumentElement());
+        } catch (JAXBException ex) {
+            throw new ParseException(ex);
+        }
     }
 
     @Override

@@ -35,9 +35,11 @@ public class SummaryDocumentFactory {
         return list;
     }
 
-    public static List<SummaryDocument> createListOfSummaryDocuments(DocumentPair pair) {
+    public static List<SummaryDocument> createListOfSummaryDocuments(DocumentSet pair) {
         return createListOfSummaryDocuments(pair.getReport(), pair.getPayDocs());
     }
+
+//    public static List<SummaryDocument> createListOfSummaryDocuments();
 
     private SummaryDocumentFactory() {
     }

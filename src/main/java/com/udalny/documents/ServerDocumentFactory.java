@@ -1,38 +1,44 @@
 package com.udalny.documents;
 
-import com.udalny.documents.paydocs.PayDocs;
-import com.udalny.documents.report.Report;
-import com.udalny.xml.XMLtoMapParser;
 
-import java.io.InputStream;
-import java.util.Map;
+import com.udalny.exceptions.ParseException;
+import com.udalny.xml.jaxb.JAXBDocConverter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import java.io.ByteArrayInputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.LinkedList;
+import java.util.List;
+
+@Component
 public class ServerDocumentFactory {
-    private static final String PAY_DOCS_TAG = "Inf_Pay_Doc";
-    private static final String REPORT_TAG = "SKP_REPORT_KS";
 
-    public static ServerDocument getDocument(Map<String, Object> map) {
-        if (map.containsKey(PAY_DOCS_TAG))
-            return new PayDocs((Map<String, Object>) map.get(PAY_DOCS_TAG));
-        else if (map.containsKey(REPORT_TAG))
-            return new Report((Map<String, Object>) map.get(REPORT_TAG));
-
-        return null;
-    }
-
-    public static ServerDocument getDocument(String xmlFilename) {
-        XMLtoMapParser parser = new XMLtoMapParser(xmlFilename);
-        Map<String, Object> map = parser.parse();
-        return getDocument(map);
-    }
-
-    public static ServerDocument getDocument(InputStream in) {
-        XMLtoMapParser parser = new XMLtoMapParser(in);
-        Map<String, Object> map = parser.parse();
-        return getDocument(map);
-    }
+    private static JAXBDocConverter converter;
 
     private ServerDocumentFactory() {
-
     }
+
+    @Autowired
+    private ServerDocumentFactory(JAXBDocConverter converter) {
+        ServerDocumentFactory.converter = converter;
+    }
+
+    public static List<ServerDocument> createListOfServerDocumentsFromFileContents(List<String> contents)
+            throws ParseException {
+
+        List<ServerDocument> documents = new LinkedList<>();
+        for (String content : contents) {
+            ServerDocument doc = converter.parse(new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8)));
+            documents.add(doc);
+        }
+
+        return documents;
+    }
+
+    public static ServerDocument createDocument(String fileContents)
+            throws ParseException {
+            return converter.parse(new ByteArrayInputStream(fileContents.getBytes(StandardCharsets.UTF_8)));
+    }
+
 }
