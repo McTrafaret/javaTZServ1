@@ -2,7 +2,8 @@ package com.udalny.xml.dom;
 
 import com.udalny.exceptions.FieldMapException;
 import com.udalny.util.ObjectMapper;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -13,7 +14,7 @@ public abstract class XMLDomParser {
 
 
     protected XMLDomParser() {
-        logger = Logger.getLogger(this.getClass());
+        logger = LoggerFactory.getLogger(this.getClass());
     }
 
     protected boolean hasChildElements(Element el) {
@@ -63,7 +64,7 @@ public abstract class XMLDomParser {
                 try {
                     checkFieldAndSet(obj, (Element) children.item(i));
                 } catch (FieldMapException ex) {
-                    logger.error(ex);
+                    logger.error(ex.toString());
                 }
             }
         }

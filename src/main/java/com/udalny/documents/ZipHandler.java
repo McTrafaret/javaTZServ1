@@ -1,6 +1,7 @@
 package com.udalny.documents;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -13,7 +14,7 @@ import java.util.zip.ZipInputStream;
 public class ZipHandler {
 
     //4. slf4j
-    private static Logger logger = Logger.getLogger(ZipHandler.class);
+    private static Logger logger = LoggerFactory.getLogger(ZipHandler.class);
 
     private ZipHandler() {
     }

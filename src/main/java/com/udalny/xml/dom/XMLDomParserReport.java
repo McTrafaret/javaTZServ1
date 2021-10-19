@@ -5,6 +5,8 @@ import com.udalny.documents.report.Doc;
 import com.udalny.documents.report.Report;
 import com.udalny.documents.report.StmInfrmtnTF;
 import com.udalny.xml.XMLParser;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -13,6 +15,8 @@ import org.w3c.dom.NodeList;
 import java.util.LinkedList;
 import java.util.List;
 
+@Service
+@Profile("DomParser")
 public class XMLDomParserReport
         extends XMLDomParser
         implements XMLParser<Report> {
@@ -84,7 +88,7 @@ public class XMLDomParserReport
                     try {
                         checkFieldAndSet(report, child);
                     } catch (FieldMapException ex) {
-                        logger.error(ex);
+                        logger.error(ex.toString());
                     }
                 }
             }

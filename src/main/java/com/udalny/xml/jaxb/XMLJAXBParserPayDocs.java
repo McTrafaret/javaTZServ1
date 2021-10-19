@@ -13,7 +13,7 @@ public class XMLJAXBParserPayDocs
         implements XMLParser<PayDocs> {
 
     static final String PAYDOCS_TAG = "Inf_Pay_Doc";
-    static Logger logger = Logger.getLogger(XMLJAXBParserPayDocs.class);
+    static Logger logger = LoggerFactory.getLogger(XMLJAXBParserPayDocs.class);
 
     public XMLJAXBParserPayDocs() {
         /* needed in DocConverter */

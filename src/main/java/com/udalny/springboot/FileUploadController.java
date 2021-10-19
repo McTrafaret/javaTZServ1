@@ -3,7 +3,8 @@ package com.udalny.springboot;
 import com.udalny.documents.*;
 import com.udalny.exceptions.DocumentSetException;
 import com.udalny.exceptions.ParseException;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,7 +18,7 @@ import java.util.List;
 @RestController
 public class FileUploadController {
 
-    private static Logger logger = Logger.getLogger(FileUploadController.class);
+    private static Logger logger = LoggerFactory.getLogger(FileUploadController.class);
 
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public List<SummaryDocument> fileUpload(@RequestParam("file") MultipartFile file)
@@ -38,7 +39,8 @@ public class FileUploadController {
             return SummaryDocumentFactory.createListOfSummaryDocuments(docs);
 
         } catch (ParseException | DocumentSetException ex) {
-            logger.error(ex);
+            logger.error(ex.toString());
+            ex.printStackTrace();
         }
 
         return Collections.emptyList();

@@ -1,17 +1,24 @@
 package com.udalny.xml;
 
-import javax.xml.parsers.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
-import org.apache.log4j.Logger;
-import org.w3c.dom.*;
-
-import java.util.*;
-import java.io.InputStream;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
 
 public class XMLtoMapParser {
     private InputStream in;
-    static Logger logger = Logger.getLogger(XMLtoMapParser.class);
+    static Logger logger = LoggerFactory.getLogger(XMLtoMapParser.class);
 
     private boolean hasChildElements(Element el) {
         NodeList children = el.getChildNodes();

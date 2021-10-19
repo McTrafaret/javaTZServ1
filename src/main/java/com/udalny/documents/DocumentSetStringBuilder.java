@@ -3,12 +3,17 @@ package com.udalny.documents;
 import com.udalny.exceptions.DocumentSetException;
 import com.udalny.exceptions.ParseException;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class DocumentSetStringBuilder
         implements DocumentSetBuilder<String> {
 
     private List<ServerDocument> documents;
+
+    public DocumentSetStringBuilder() {
+        documents = new LinkedList<>();
+    }
 
     public void addDocument(String content)
             throws ParseException {

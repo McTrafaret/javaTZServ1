@@ -13,7 +13,7 @@ import java.util.List;
 
 public abstract class DocConverter {
 
-    private List<XMLParser<?>> parsers;
+    protected List<XMLParser<?>> parsers;
 
     private Document createDocument(InputStream in)
             throws IOException, ParserConfigurationException, SAXException {

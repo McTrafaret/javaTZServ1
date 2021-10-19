@@ -1,7 +1,8 @@
 package com.udalny.util;
 
 import com.udalny.exceptions.FieldMapException;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
@@ -13,7 +14,7 @@ import java.util.Map;
 public class ObjectMapper {
 
     private static final String DATE_FORMAT = "yyyy-MM-dd";
-    static Logger logger = Logger.getLogger(ObjectMapper.class);
+    static Logger logger = LoggerFactory.getLogger(ObjectMapper.class);
 
     private ObjectMapper() {
     }
@@ -77,7 +78,7 @@ public class ObjectMapper {
                 try {
                     mapStringValueToField(obj, fieldName, val);
                 } catch (FieldMapException ex) {
-                    logger.error(ex);
+                    logger.error(ex.toString());
                 }
             }
         }

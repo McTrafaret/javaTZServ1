@@ -13,7 +13,7 @@ public class XMLJAXBParserReport
         implements XMLParser<Report> {
 
     static final String REPORT_TAG = "SKP_REPORT_KS";
-    static Logger logger = Logger.getLogger(XMLJAXBParserReport.class);
+    static Logger logger = LoggerFactory.getLogger(XMLJAXBParserReport.class);
 
     public XMLJAXBParserReport() {
         /* needed in DocConverter */

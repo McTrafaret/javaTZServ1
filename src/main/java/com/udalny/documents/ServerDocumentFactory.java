@@ -2,7 +2,7 @@ package com.udalny.documents;
 
 
 import com.udalny.exceptions.ParseException;
-import com.udalny.xml.jaxb.JAXBDocConverter;
+import com.udalny.xml.DocConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,13 +14,13 @@ import java.util.List;
 @Component
 public class ServerDocumentFactory {
 
-    private static JAXBDocConverter converter;
+    private static DocConverter converter;
 
     private ServerDocumentFactory() {
     }
 
     @Autowired
-    private ServerDocumentFactory(JAXBDocConverter converter) {
+    private ServerDocumentFactory(DocConverter converter) {
         ServerDocumentFactory.converter = converter;
     }
 

@@ -3,6 +3,8 @@ package com.udalny.xml.dom;
 import com.udalny.exceptions.FieldMapException;
 import com.udalny.documents.paydocs.*;
 import com.udalny.xml.XMLParser;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -11,6 +13,8 @@ import org.w3c.dom.NodeList;
 import java.util.LinkedList;
 import java.util.List;
 
+@Service
+@Profile("DomParser")
 public class XMLDomParserPayDocs
         extends XMLDomParser
         implements XMLParser<PayDocs> {
@@ -76,7 +80,7 @@ public class XMLDomParserPayDocs
                     try {
                         checkFieldAndSet(res, child);
                     } catch(FieldMapException ex) {
-                        logger.error(ex);
+                        logger.error(ex.toString());
                     }
                 }
             }
@@ -125,7 +129,7 @@ public class XMLDomParserPayDocs
                     try {
                         checkFieldAndSet(paydocs, child);
                     } catch (FieldMapException ex) {
-                        logger.error(ex);
+                        logger.error(ex.toString());
                     }
                 }
             }
