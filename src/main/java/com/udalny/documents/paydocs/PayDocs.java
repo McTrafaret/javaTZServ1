@@ -13,14 +13,14 @@ import java.util.Map;
 public class PayDocs
         extends ServerDocument {
 
-    String GUID_Doc;
-    Date Date;
-    String Scrc;
-    String Vid_Otch;
-    int Kol_Doc;
+    private String GUID_Doc;
+    private Date Date;
+    private String Scrc;
+    private String Vid_Otch;
+    private int Kol_Doc;
     @XmlElementWrapper(name = "Docs")
     @XmlElement(name = "Doc", type = Doc.class)
-    List<Doc> Docs;
+    private List<Doc> Docs;
 
     public PayDocs() {
     }

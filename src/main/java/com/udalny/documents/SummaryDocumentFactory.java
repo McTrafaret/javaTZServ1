@@ -10,6 +10,9 @@ import java.util.List;
 
 public class SummaryDocumentFactory {
 
+    private SummaryDocumentFactory() {
+    }
+
     public static List<SummaryDocument> createListOfSummaryDocuments(Report report, PayDocs paydocs) {
         LinkedList<SummaryDocument> list = new LinkedList<>();
 
@@ -39,8 +42,4 @@ public class SummaryDocumentFactory {
         return createListOfSummaryDocuments(pair.getReport(), pair.getPayDocs());
     }
 
-//    public static List<SummaryDocument> createListOfSummaryDocuments();
-
-    private SummaryDocumentFactory() {
-    }
 }

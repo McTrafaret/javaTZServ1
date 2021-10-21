@@ -10,23 +10,25 @@ import java.util.*;
 
 @XmlRootElement(name = "Doc")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Doc
-        implements Comparable<com.udalny.documents.paydocs.Doc> {
-    int Line_Num;
-    int DocNum;
-    Date DocDate;
-    String DocGUID;
-    String OperType;
-    String Bic_Corr;
-    BigDecimal AmountIn;
-    BigDecimal AmountOut;
-    String SendAcc;
-    String RecipAcc;
-    String PurpPay;
+public class Doc {
 
-    @Override
-    public int compareTo(com.udalny.documents.paydocs.Doc other) {
-        return DocGUID.compareTo(other.getGUID());
+    private int Line_Num;
+    private int DocNum;
+    private Date DocDate;
+    private String DocGUID;
+    private String OperType;
+    private String Bic_Corr;
+    private BigDecimal AmountIn;
+    private BigDecimal AmountOut;
+    private String SendAcc;
+    private String RecipAcc;
+    private String PurpPay;
+
+    public Doc() {
+    }
+
+    public Doc(Map<String, Object> map) {
+        ObjectMapper.map(this, map);
     }
 
     public static List<Doc> parseDocs(Map<String, Object> map) {
@@ -40,13 +42,6 @@ public class Doc
         }
 
         return ret;
-    }
-
-    public Doc() {
-    }
-
-    public Doc(Map<String, Object> map) {
-        ObjectMapper.map(this, map);
     }
 
     public int getLine_Num() {

@@ -11,8 +11,7 @@ import java.util.*;
 
 @XmlRootElement(name = "Doc")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Doc
-        implements Comparable<com.udalny.documents.report.Doc> {
+public class Doc {
 
     private int Num;
     private Date Date;
@@ -36,24 +35,6 @@ public class Doc
     private Date Date_IN_TOFK;
     private String GUID;
 
-    @Override
-    public int compareTo(com.udalny.documents.report.Doc other) {
-        return GUID.compareTo(other.getDocGUID());
-    }
-
-    public static List<Doc> parseDocs(Map<String, Object> map) {
-        LinkedList<Doc> ret = new LinkedList<>();
-        LinkedList<Object> docs = (LinkedList<Object>) map.get("Doc");
-        Iterator<Object> iter = docs.iterator();
-        iter.next();
-        while (iter.hasNext()) {
-            Map<String, Object> docMap = (Map<String, Object>) iter.next();
-            ret.add(new Doc(docMap));
-        }
-
-        return ret;
-    }
-
     public Doc() {
     }
 
@@ -72,6 +53,20 @@ public class Doc
         Map<String, Object> bankRcpMap = (Map<String, Object>) map.get("Bank_RCP");
         Bank_RCP = new BankRcp(bankRcpMap);
 
+    }
+
+
+    public static List<Doc> parseDocs(Map<String, Object> map) {
+        LinkedList<Doc> ret = new LinkedList<>();
+        LinkedList<Object> docs = (LinkedList<Object>) map.get("Doc");
+        Iterator<Object> iter = docs.iterator();
+        iter.next();
+        while (iter.hasNext()) {
+            Map<String, Object> docMap = (Map<String, Object>) iter.next();
+            ret.add(new Doc(docMap));
+        }
+
+        return ret;
     }
 
     public void setInf_PAY(InfPay inf_PAY) {

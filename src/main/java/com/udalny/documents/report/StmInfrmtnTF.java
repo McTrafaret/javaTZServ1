@@ -10,7 +10,7 @@ import java.util.Map;
 @XmlRootElement(name = "StmInfrmtn_TF")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class StmInfrmtnTF {
-    String GUID;
+    private String GUID;
 
     public StmInfrmtnTF() {
     }

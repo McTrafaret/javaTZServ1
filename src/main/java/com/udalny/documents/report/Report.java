@@ -14,18 +14,18 @@ import java.util.Map;
 public class Report
         extends ServerDocument {
 
-    BigInteger DocNum;
-    Date DocDate;
-    Date DocDateOld;
-    BigInteger AccNum;
-    String Report_type_flag;
-    int Code_OKEU;
-    String Executor_SFP;
-    String Executor_Post;
-    StmInfrmtnTF StmInfrmtn_TF;
+    private BigInteger DocNum;
+    private Date DocDate;
+    private Date DocDateOld;
+    private BigInteger AccNum;
+    private String Report_type_flag;
+    private int Code_OKEU;
+    private String Executor_SFP;
+    private String Executor_Post;
+    private StmInfrmtnTF StmInfrmtn_TF;
     @XmlElementWrapper(name = "Docs")
     @XmlElement(name = "Doc", type = Doc.class)
-    List<Doc> Docs;
+    private List<Doc> Docs;
 
     public Report() {
     }

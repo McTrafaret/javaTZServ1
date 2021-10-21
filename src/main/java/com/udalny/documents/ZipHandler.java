@@ -13,7 +13,6 @@ import java.util.zip.ZipInputStream;
 
 public class ZipHandler {
 
-    //4. slf4j
     private static Logger logger = LoggerFactory.getLogger(ZipHandler.class);
 
     private ZipHandler() {
@@ -43,6 +42,5 @@ public class ZipHandler {
         return contentsList;
 
     }
-
 
 }
