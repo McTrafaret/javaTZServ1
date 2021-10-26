@@ -6,18 +6,19 @@ import com.udalny.xml.XMLParser;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Unmarshaller;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 
+@Service
+@Profile("JAXBParser")
 public class XMLJAXBParserPayDocs
         implements XMLParser<PayDocs> {
 
     static final String PAYDOCS_TAG = "Inf_Pay_Doc";
     static Logger logger = LoggerFactory.getLogger(XMLJAXBParserPayDocs.class);
-
-    public XMLJAXBParserPayDocs() {
-        /* needed in DocConverter */
-    }
 
     @Override
     public PayDocs parse(Document doc)

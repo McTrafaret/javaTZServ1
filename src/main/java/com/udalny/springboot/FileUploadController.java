@@ -46,17 +46,9 @@ public class FileUploadController {
         return Collections.emptyList();
 
 
-        ZipHandler zipHandler = new ZipHandler(filename);
+        //service, //autowired
+//        ZipHandler zipHandler = new ZipHandler(filename);
 
-        try {
-            return SummaryDocumentFactory.createListOfSummaryDocuments(zipHandler.getDocuments());
-        } catch (ParseException ex) {
-            System.err.println(ex);
-        } catch (InvalidZipContentsException ex) {
-            System.err.println(ex);
-        }
-
-        return null;
 
     }
 

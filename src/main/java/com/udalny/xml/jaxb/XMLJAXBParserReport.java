@@ -6,18 +6,19 @@ import com.udalny.xml.XMLParser;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Unmarshaller;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 
+@Service
+@Profile("JAXBParser")
 public class XMLJAXBParserReport
         implements XMLParser<Report> {
 
     static final String REPORT_TAG = "SKP_REPORT_KS";
     static Logger logger = LoggerFactory.getLogger(XMLJAXBParserReport.class);
-
-    public XMLJAXBParserReport() {
-        /* needed in DocConverter */
-    }
 
     @Override
     public Report parse(Document doc)
