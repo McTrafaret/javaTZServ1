@@ -7,8 +7,10 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public abstract class DocConverter {
@@ -21,6 +23,11 @@ public abstract class DocConverter {
         DocumentBuilder builder = factory.newDocumentBuilder();
 
         return builder.parse(in);
+    }
+
+    public <T> T parse(String s)
+            throws ParseException {
+        return parse(new ByteArrayInputStream(s.getBytes(StandardCharsets.UTF_8)));
     }
 
     public <T> T parse(InputStream in)

@@ -1,29 +1,33 @@
 package com.udalny.documents;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.udalny.documents.file.File;
+import com.udalny.documents.file.FileCreator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+@Service
 public class ZipHandler {
 
-    private static Logger logger = LoggerFactory.getLogger(ZipHandler.class);
+    @Autowired
+    private FileCreator fileCreator;
 
     private ZipHandler() {
     }
 
-    public static List<String> createListOfFileContents(InputStream in)
+    public List<File> createListOfFiles(InputStream in)
             throws IOException {
 
         ZipInputStream zipStream = new ZipInputStream(in);
 
-        List<String> contentsList = new LinkedList<>();
+        List<File> files = new ArrayList<>();
         for (ZipEntry entry = zipStream.getNextEntry(); entry != null; entry = zipStream.getNextEntry()) {
 
             ByteArrayOutputStream res = new ByteArrayOutputStream();
@@ -35,11 +39,11 @@ public class ZipHandler {
                 length = zipStream.read(buffer);
             } while (length != -1);
 
-            contentsList.add(res.toString());
+            files.add(fileCreator.create(entry.getName(), res.toString()));
 
         }
 
-        return contentsList;
+        return files;
 
     }
 

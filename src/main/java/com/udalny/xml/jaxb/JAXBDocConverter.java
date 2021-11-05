@@ -13,7 +13,6 @@ import java.util.List;
 public final class JAXBDocConverter
     extends DocConverter {
 
-    //@Profile, @Service, @Autowired, @Component, @Conditional, @Repository
     @Autowired
     private JAXBDocConverter(List<XMLParser<?>> parsers) {
         this.parsers = parsers;
