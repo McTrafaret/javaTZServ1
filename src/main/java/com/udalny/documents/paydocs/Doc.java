@@ -1,198 +1,254 @@
 package com.udalny.documents.paydocs;
 
-import com.udalny.util.ObjectMapper;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlElement;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.*;
+import java.util.Date;
 
 @XmlRootElement(name = "Doc")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Doc {
 
-    private int Num;
-    private Date Date;
-    private BigInteger ID;
-    private int Nom_PP;
-    private Date Date_PP;
-    private BigDecimal Sum_PP;
-    private String Vid_Pay;
-    private Date Date_PP_IN;
-    private Date Date_PP_OUT;
-    private String VID_Oper;
-    private InfPay Inf_PAY;
-    private BankPay Bank_PAY;
-    private InfRcp Inf_RCP;
-    private BankRcp Bank_RCP;
-    private int Purpose_ID;
-    private String Order_PAY;
-    private String UIN;
-    private String Purpose;
-    private String Type_Pl;
-    private Date Date_IN_TOFK;
-    private String GUID;
-
-    public Doc() {
-    }
-
-    public Doc(Map<String, Object> map) {
-        ObjectMapper.map(this, map);
-
-        Map<String, Object> infPayMap = (Map<String, Object>) map.get("Inf_PAY");
-        Inf_PAY = new InfPay(infPayMap);
-
-        Map<String, Object> bankPayMap = (Map<String, Object>) map.get("Bank_PAY");
-        Bank_PAY = new BankPay(bankPayMap);
-
-        Map<String, Object> infRcpMap = (Map<String, Object>) map.get("Inf_RCP");
-        Inf_RCP = new InfRcp(infRcpMap);
-
-        Map<String, Object> bankRcpMap = (Map<String, Object>) map.get("Bank_RCP");
-        Bank_RCP = new BankRcp(bankRcpMap);
-
-    }
-
-
-    public static List<Doc> parseDocs(Map<String, Object> map) {
-        LinkedList<Doc> ret = new LinkedList<>();
-        LinkedList<Object> docs = (LinkedList<Object>) map.get("Doc");
-        Iterator<Object> iter = docs.iterator();
-        iter.next();
-        while (iter.hasNext()) {
-            Map<String, Object> docMap = (Map<String, Object>) iter.next();
-            ret.add(new Doc(docMap));
-        }
-
-        return ret;
-    }
-
-    public void setInf_PAY(InfPay inf_PAY) {
-        Inf_PAY = inf_PAY;
-    }
-
-    public void setBank_PAY(BankPay bank_PAY) {
-        Bank_PAY = bank_PAY;
-    }
-
-    public void setInf_RCP(InfRcp inf_RCP) {
-        Inf_RCP = inf_RCP;
-    }
-
-    public void setBank_RCP(BankRcp bank_RCP) {
-        Bank_RCP = bank_RCP;
-    }
+    @XmlElement(name = "Num")
+    private int num;
+    @XmlElement(name = "Date")
+    private Date date;
+    @XmlElement(name = "ID")
+    private BigInteger id;
+    @XmlElement(name = "Nom_PP")
+    private int nomPp;
+    @XmlElement(name = "Date_PP")
+    private Date datePp;
+    @XmlElement(name = "Sum_PP")
+    private BigDecimal sumPp;
+    @XmlAttribute(name = "Vid_Pay")
+    private String vidPay;
+    @XmlElement(name = "Date_PP_IN")
+    private Date datePpIn;
+    @XmlElement(name = "Date_PP_OUT")
+    private Date datePpOut;
+    @XmlElement(name = "VID_Oper")
+    private String vidOper;
+    @XmlElement(name = "Inf_PAY", type = InfPay.class)
+    private InfPay infPay;
+    @XmlElement(name = "Bank_PAY", type = BankPay.class)
+    private BankPay bankPay;
+    @XmlElement(name = "Inf_RCP", type = InfRcp.class)
+    private InfRcp infRcp;
+    @XmlElement(name = "Bank_RCP", type = BankRcp.class)
+    private BankRcp bankRcp;
+    @XmlElement(name = "Purpose_ID")
+    private int purposeId;
+    @XmlElement(name = "Order_PAY")
+    private String orderPay;
+    @XmlElement(name = "UIN")
+    private String uin;
+    @XmlElement(name = "Purpose")
+    private String purpose;
+    @XmlElement(name = "Type_Pl")
+    private String typePl;
+    @XmlElement(name = "Date_IN_TOFK")
+    private Date dateInTofk;
+    @XmlElement(name = "GUID")
+    private String guid;
 
     public int getNum() {
-        return Num;
+        return num;
     }
 
-    public java.util.Date getDate() {
-        return Date;
+    public void setNum(int num) {
+        this.num = num;
     }
 
-    public BigInteger getID() {
-        return ID;
+    public Date getDate() {
+        return date;
     }
 
-    public int getNom_PP() {
-        return Nom_PP;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
-    public java.util.Date getDate_PP() {
-        return Date_PP;
+    public BigInteger getId() {
+        return id;
     }
 
-    public BigDecimal getSum_PP() {
-        return Sum_PP;
+    public void setId(BigInteger id) {
+        this.id = id;
     }
 
-    public String getVid_Pay() {
-        return Vid_Pay;
+    public int getNomPp() {
+        return nomPp;
     }
 
-    public java.util.Date getDate_PP_IN() {
-        return Date_PP_IN;
+    public void setNomPp(int nomPp) {
+        this.nomPp = nomPp;
     }
 
-    public java.util.Date getDate_PP_OUT() {
-        return Date_PP_OUT;
+    public Date getDatePp() {
+        return datePp;
     }
 
-    public String getVID_Oper() {
-        return VID_Oper;
+    public void setDatePp(Date datePp) {
+        this.datePp = datePp;
     }
 
-    public InfPay getInf_PAY() {
-        return Inf_PAY;
+    public BigDecimal getSumPp() {
+        return sumPp;
     }
 
-    public BankPay getBank_PAY() {
-        return Bank_PAY;
+    public void setSumPp(BigDecimal sumPp) {
+        this.sumPp = sumPp;
     }
 
-    public InfRcp getInf_RCP() {
-        return Inf_RCP;
+    public String getVidPay() {
+        return vidPay;
     }
 
-    public BankRcp getBank_RCP() {
-        return Bank_RCP;
+    public void setVidPay(String vidPay) {
+        this.vidPay = vidPay;
     }
 
-    public int getPurpose_ID() {
-        return Purpose_ID;
+    public Date getDatePpIn() {
+        return datePpIn;
     }
 
-    public String getOrder_PAY() {
-        return Order_PAY;
+    public void setDatePpIn(Date datePpIn) {
+        this.datePpIn = datePpIn;
     }
 
-    public String getUIN() {
-        return UIN;
+    public Date getDatePpOut() {
+        return datePpOut;
+    }
+
+    public void setDatePpOut(Date datePpOut) {
+        this.datePpOut = datePpOut;
+    }
+
+    public String getVidOper() {
+        return vidOper;
+    }
+
+    public void setVidOper(String vidOper) {
+        this.vidOper = vidOper;
+    }
+
+    public InfPay getInfPay() {
+        return infPay;
+    }
+
+    public void setInfPay(InfPay infPay) {
+        this.infPay = infPay;
+    }
+
+    public BankPay getBankPay() {
+        return bankPay;
+    }
+
+    public void setBankPay(BankPay bankPay) {
+        this.bankPay = bankPay;
+    }
+
+    public InfRcp getInfRcp() {
+        return infRcp;
+    }
+
+    public void setInfRcp(InfRcp infRcp) {
+        this.infRcp = infRcp;
+    }
+
+    public BankRcp getBankRcp() {
+        return bankRcp;
+    }
+
+    public void setBankRcp(BankRcp bankRcp) {
+        this.bankRcp = bankRcp;
+    }
+
+    public int getPurposeId() {
+        return purposeId;
+    }
+
+    public void setPurposeId(int purposeId) {
+        this.purposeId = purposeId;
+    }
+
+    public String getOrderPay() {
+        return orderPay;
+    }
+
+    public void setOrderPay(String orderPay) {
+        this.orderPay = orderPay;
+    }
+
+    public String getUin() {
+        return uin;
+    }
+
+    public void setUin(String uin) {
+        this.uin = uin;
     }
 
     public String getPurpose() {
-        return Purpose;
+        return purpose;
     }
 
-    public String getType_Pl() {
-        return Type_Pl;
+    public void setPurpose(String purpose) {
+        this.purpose = purpose;
     }
 
-    public java.util.Date getDate_IN_TOFK() {
-        return Date_IN_TOFK;
+    public String getTypePl() {
+        return typePl;
     }
 
-    public String getGUID() {
-        return GUID;
+    public void setTypePl(String typePl) {
+        this.typePl = typePl;
+    }
+
+    public Date getDateInTofk() {
+        return dateInTofk;
+    }
+
+    public void setDateInTofk(Date dateInTofk) {
+        this.dateInTofk = dateInTofk;
+    }
+
+    public String getGuid() {
+        return guid;
+    }
+
+    public void setGuid(String guid) {
+        this.guid = guid;
     }
 
     @Override
     public String toString() {
         return "Doc{" +
-                "Num=" + Num +
-                ", Date=" + Date +
-                ", ID=" + ID +
-                ", Nom_PP=" + Nom_PP +
-                ", Date_PP=" + Date_PP +
-                ", Sum_PP=" + Sum_PP +
-                ", Vid_Pay='" + Vid_Pay + '\'' +
-                ", Date_PP_IN=" + Date_PP_IN +
-                ", Date_PP_OUT=" + Date_PP_OUT +
-                ", VID_Oper='" + VID_Oper + '\'' +
-                ", Inf_PAY=" + Inf_PAY +
-                ", Bank_PAY=" + Bank_PAY +
-                ", Inf_RCP=" + Inf_RCP +
-                ", Bank_RCP=" + Bank_RCP +
-                ", Purpose_ID=" + Purpose_ID +
-                ", Order_PAY='" + Order_PAY + '\'' +
-                ", UIN='" + UIN + '\'' +
-                ", Purpose='" + Purpose + '\'' +
-                ", Type_Pl='" + Type_Pl + '\'' +
-                ", Date_IN_TOFK=" + Date_IN_TOFK +
-                ", GUID='" + GUID + '\'' +
+                "num=" + num +
+                ", date=" + date +
+                ", id=" + id +
+                ", nomPp=" + nomPp +
+                ", datePp=" + datePp +
+                ", sumPp=" + sumPp +
+                ", vidPay='" + vidPay + '\'' +
+                ", datePpIn=" + datePpIn +
+                ", datePpOut=" + datePpOut +
+                ", vidOper='" + vidOper + '\'' +
+                ", infPay=" + infPay +
+                ", bankPay=" + bankPay +
+                ", infRcp=" + infRcp +
+                ", bankRcp=" + bankRcp +
+                ", purposeId=" + purposeId +
+                ", orderPay='" + orderPay + '\'' +
+                ", uin='" + uin + '\'' +
+                ", purpose='" + purpose + '\'' +
+                ", typePl='" + typePl + '\'' +
+                ", dateInTofk=" + dateInTofk +
+                ", guid='" + guid + '\'' +
                 '}';
     }
 }

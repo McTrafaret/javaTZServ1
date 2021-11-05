@@ -1,107 +1,142 @@
 package com.udalny.documents.report;
 
-import com.udalny.util.ObjectMapper;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.Date;
 
 @XmlRootElement(name = "Doc")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Doc {
 
-    private int Line_Num;
-    private int DocNum;
-    private Date DocDate;
-    private String DocGUID;
-    private String OperType;
-    private String Bic_Corr;
-    private BigDecimal AmountIn;
-    private BigDecimal AmountOut;
-    private String SendAcc;
-    private String RecipAcc;
-    private String PurpPay;
+    @XmlElement(name = "Line_Num")
+    private int lineNum;
+    @XmlElement(name = "DocNum")
+    private int docNum;
+    @XmlElement(name = "DocDate")
+    private Date docDate;
+    @XmlElement(name = "DocGUID")
+    private String docGUID;
+    @XmlElement(name = "OperType")
+    private String operType;
+    @XmlElement(name = "Bic_Corr")
+    private String bicCorr;
+    @XmlElement(name = "AmountIn")
+    private BigDecimal amountIn;
+    @XmlElement(name = "AmountOut")
+    private BigDecimal amountOut;
+    @XmlElement(name = "SendAcc")
+    private String sendAcc;
+    @XmlElement(name = "RecipAcc")
+    private String recipAcc;
+    @XmlElement(name = "PurpPay")
+    private String purpPay;
 
-    public Doc() {
+    public int getLineNum() {
+        return lineNum;
     }
 
-    public Doc(Map<String, Object> map) {
-        ObjectMapper.map(this, map);
-    }
-
-    public static List<Doc> parseDocs(Map<String, Object> map) {
-        LinkedList<Doc> ret = new LinkedList<>();
-        LinkedList<Object> docs = (LinkedList<Object>) map.get("Doc");
-        Iterator<Object> iter = docs.iterator();
-        iter.next();
-        while (iter.hasNext()) {
-            Map<String, Object> docMap = (Map<String, Object>) iter.next();
-            ret.add(new Doc(docMap));
-        }
-
-        return ret;
-    }
-
-    public int getLine_Num() {
-        return Line_Num;
+    public void setLineNum(int lineNum) {
+        this.lineNum = lineNum;
     }
 
     public int getDocNum() {
-        return DocNum;
+        return docNum;
+    }
+
+    public void setDocNum(int docNum) {
+        this.docNum = docNum;
     }
 
     public Date getDocDate() {
-        return DocDate;
+        return docDate;
+    }
+
+    public void setDocDate(Date docDate) {
+        this.docDate = docDate;
     }
 
     public String getDocGUID() {
-        return DocGUID;
+        return docGUID;
+    }
+
+    public void setDocGUID(String docGUID) {
+        this.docGUID = docGUID;
     }
 
     public String getOperType() {
-        return OperType;
+        return operType;
     }
 
-    public String getBic_Corr() {
-        return Bic_Corr;
+    public void setOperType(String operType) {
+        this.operType = operType;
+    }
+
+    public String getBicCorr() {
+        return bicCorr;
+    }
+
+    public void setBicCorr(String bicCorr) {
+        this.bicCorr = bicCorr;
     }
 
     public BigDecimal getAmountIn() {
-        return AmountIn;
+        return amountIn;
+    }
+
+    public void setAmountIn(BigDecimal amountIn) {
+        this.amountIn = amountIn;
     }
 
     public BigDecimal getAmountOut() {
-        return AmountOut;
+        return amountOut;
+    }
+
+    public void setAmountOut(BigDecimal amountOut) {
+        this.amountOut = amountOut;
     }
 
     public String getSendAcc() {
-        return SendAcc;
+        return sendAcc;
+    }
+
+    public void setSendAcc(String sendAcc) {
+        this.sendAcc = sendAcc;
     }
 
     public String getRecipAcc() {
-        return RecipAcc;
+        return recipAcc;
+    }
+
+    public void setRecipAcc(String recipAcc) {
+        this.recipAcc = recipAcc;
     }
 
     public String getPurpPay() {
-        return PurpPay;
+        return purpPay;
+    }
+
+    public void setPurpPay(String purpPay) {
+        this.purpPay = purpPay;
     }
 
     @Override
     public String toString() {
         return "Doc{" +
-                "Line_Num=" + Line_Num +
-                ", DocNum=" + DocNum +
-                ", DocDate=" + DocDate +
-                ", DocGUID='" + DocGUID + '\'' +
-                ", OperType='" + OperType + '\'' +
-                ", Bic_Corr='" + Bic_Corr + '\'' +
-                ", AmountIn=" + AmountIn +
-                ", AmountOut=" + AmountOut +
-                ", SendAcc='" + SendAcc + '\'' +
-                ", RecipAcc='" + RecipAcc + '\'' +
-                ", PurpPay='" + PurpPay + '\'' +
+                "lineNum=" + lineNum +
+                ", docNum=" + docNum +
+                ", docDate=" + docDate +
+                ", docGUID='" + docGUID + '\'' +
+                ", operType='" + operType + '\'' +
+                ", bicCorr='" + bicCorr + '\'' +
+                ", amountIn=" + amountIn +
+                ", amountOut=" + amountOut +
+                ", sendAcc='" + sendAcc + '\'' +
+                ", recipAcc='" + recipAcc + '\'' +
+                ", purpPay='" + purpPay + '\'' +
                 '}';
     }
 }

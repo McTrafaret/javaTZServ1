@@ -1,44 +1,52 @@
 package com.udalny.documents.paydocs;
 
-import com.udalny.util.ObjectMapper;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
 
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.Map;
 
 @XmlRootElement(name = "Bank_RCP")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class BankRcp {
-    private String BS_PAY;
-    private String BIC_PAY;
-    private String BS_KS_PAY;
 
-    public BankRcp() {
+    @XmlElement(name = "BS_PAY")
+    private String bsPay;
+    @XmlElement(name = "BIC_PAY")
+    private String bicPay;
+    @XmlElement(name = "BS_KS_PAY")
+    private String bsKsPay;
+
+    public String getBsPay() {
+        return bsPay;
     }
 
-    public BankRcp(Map<String, Object> map) {
-        ObjectMapper.map(this, map);
+    public void setBsPay(String bsPay) {
+        this.bsPay = bsPay;
     }
 
-    public String getBS_PAY() {
-        return BS_PAY;
+    public String getBicPay() {
+        return bicPay;
     }
 
-    public String getBIC_PAY() {
-        return BIC_PAY;
+    public void setBicPay(String bicPay) {
+        this.bicPay = bicPay;
     }
 
-    public String getBS_KS_PAY() {
-        return BS_KS_PAY;
+    public String getBsKsPay() {
+        return bsKsPay;
+    }
+
+    public void setBsKsPay(String bsKsPay) {
+        this.bsKsPay = bsKsPay;
     }
 
     @Override
     public String toString() {
-        return "BankPay{" +
-                "BS_PAY='" + BS_PAY + '\'' +
-                ", BIC_PAY='" + BIC_PAY + '\'' +
-                ", BS_KS_PAY='" + BS_KS_PAY + '\'' +
+        return "BankRcp{" +
+                "bsPay='" + bsPay + '\'' +
+                ", bicPay='" + bicPay + '\'' +
+                ", bsKsPay='" + bsKsPay + '\'' +
                 '}';
     }
 }

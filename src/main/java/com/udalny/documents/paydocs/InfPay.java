@@ -1,44 +1,52 @@
 package com.udalny.documents.paydocs;
 
-import com.udalny.util.ObjectMapper;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
 
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.Map;
 
 @XmlRootElement(name = "Inf_PAY")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class InfPay {
-    private String INN_PAY;
-    private String KPP_PAY;
-    private String CName_PAY;
 
-    public InfPay() {
+    @XmlElement(name = "INN_PAY")
+    private String innPay;
+    @XmlElement(name = "KPP_PAY")
+    private String kppPay;
+    @XmlElement(name = "CName_PAY")
+    private String cnamePay;
+
+    public String getInnPay() {
+        return innPay;
     }
 
-    public InfPay(Map<String, Object> map) {
-        ObjectMapper.map(this, map);
+    public void setInnPay(String innPay) {
+        this.innPay = innPay;
     }
 
-    public String getINN_PAY() {
-        return INN_PAY;
+    public String getKppPay() {
+        return kppPay;
     }
 
-    public String getKPP_PAY() {
-        return KPP_PAY;
+    public void setKppPay(String kppPay) {
+        this.kppPay = kppPay;
     }
 
-    public String getCName_PAY() {
-        return CName_PAY;
+    public String getCnamePay() {
+        return cnamePay;
+    }
+
+    public void setCnamePay(String cnamePay) {
+        this.cnamePay = cnamePay;
     }
 
     @Override
     public String toString() {
         return "InfPay{" +
-                "INN_PAY='" + INN_PAY + '\'' +
-                ", KPP_PAY='" + KPP_PAY + '\'' +
-                ", CName_PAY='" + CName_PAY + '\'' +
+                "innPay='" + innPay + '\'' +
+                ", kppPay='" + kppPay + '\'' +
+                ", cnamePay='" + cnamePay + '\'' +
                 '}';
     }
 }

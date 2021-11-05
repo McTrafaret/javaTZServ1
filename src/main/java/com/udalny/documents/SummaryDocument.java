@@ -7,84 +7,84 @@ import java.util.Date;
 
 
 public class SummaryDocument {
-    private final int DocNum;
-    private final Date DocDate;
-    private final String DocGUID;
-    private final String OperType;
-    private final BigDecimal AmountOut;
-    private final String Purpose;
+    private final int docNum;
+    private final Date docDate;
+    private final String docGuid;
+    private final String operType;
+    private final BigDecimal amountOut;
+    private final String purpose;
 
-    private final InfPay Inf_PAY;
-    private final BankPay Bank_PAY;
-    private final InfRcp Inf_RCP;
-    private final BankRcp Bank_RCP;
+    private final InfPay infPay;
+    private final BankPay bankPay;
+    private final InfRcp infRcp;
+    private final BankRcp bankRcp;
 
     public SummaryDocument(Doc payDoc, com.udalny.documents.report.Doc reportDoc) {
-        DocNum = reportDoc.getDocNum();
-        DocDate = reportDoc.getDocDate();
-        DocGUID = reportDoc.getDocGUID();
-        OperType = reportDoc.getOperType();
-        AmountOut = reportDoc.getAmountOut();
-        Purpose = payDoc.getPurpose();
-        Inf_PAY = payDoc.getInf_PAY();
-        Bank_PAY = payDoc.getBank_PAY();
-        Inf_RCP = payDoc.getInf_RCP();
-        Bank_RCP = payDoc.getBank_RCP();
+        docNum = reportDoc.getDocNum();
+        docDate = reportDoc.getDocDate();
+        docGuid = reportDoc.getDocGUID();
+        operType = reportDoc.getOperType();
+        amountOut = reportDoc.getAmountOut();
+        purpose = payDoc.getPurpose();
+        infPay = payDoc.getInfPay();
+        bankPay = payDoc.getBankPay();
+        infRcp = payDoc.getInfRcp();
+        bankRcp = payDoc.getBankRcp();
     }
 
     public int getDocNum() {
-        return DocNum;
+        return docNum;
     }
 
     public Date getDocDate() {
-        return DocDate;
+        return docDate;
     }
 
-    public String getDocGUID() {
-        return DocGUID;
+    public String getDocGuid() {
+        return docGuid;
     }
 
     public String getOperType() {
-        return OperType;
+        return operType;
     }
 
     public BigDecimal getAmountOut() {
-        return AmountOut;
+        return amountOut;
     }
 
     public String getPurpose() {
-        return Purpose;
+        return purpose;
     }
 
-    public InfPay getInf_PAY() {
-        return Inf_PAY;
+    public InfPay getInfPay() {
+        return infPay;
     }
 
-    public BankPay getBank_PAY() {
-        return Bank_PAY;
+    public BankPay getBankPay() {
+        return bankPay;
     }
 
-    public InfRcp getInf_RCP() {
-        return Inf_RCP;
+    public InfRcp getInfRcp() {
+        return infRcp;
     }
 
-    public BankRcp getBank_RCP() {
-        return Bank_RCP;
+    public BankRcp getBankRcp() {
+        return bankRcp;
     }
 
     @Override
     public String toString() {
         return "SummaryDocument{" +
-                "DocNum=" + DocNum +
-                ", DocDate=" + DocDate +
-                ", DocGUID='" + DocGUID + '\'' +
-                ", OperType='" + OperType + '\'' +
-                ", AmountOut=" + AmountOut +
-                ", Purpose='" + Purpose + '\'' +
-                ", Inf_PAY=" + Inf_PAY +
-                ", Bank_PAY=" + Bank_PAY +
-                ", Inf_RCP=" + Inf_RCP +
-                ", Bank_RCP=" + Bank_RCP +
+                "docNum=" + docNum +
+                ", docDate=" + docDate +
+                ", docGuid='" + docGuid + '\'' +
+                ", operType='" + operType + '\'' +
+                ", amountOut=" + amountOut +
+                ", purpose='" + purpose + '\'' +
+                ", infPay=" + infPay +
+                ", bankPay=" + bankPay +
+                ", infRcp=" + infRcp +
+                ", bankRcp=" + bankRcp +
                 '}';
     }
 }

@@ -46,7 +46,7 @@ public class ReportPayDocsPacketHandler implements PacketHandler {
 
         List<SummaryDocument> res = new LinkedList<>();
 
-        if(!report.getReport_type_flag().equals("Итоговая")) {
+        if(!report.getReportTypeFlag().equals("Итоговая")) {
             return null;
         }
 
@@ -57,8 +57,8 @@ public class ReportPayDocsPacketHandler implements PacketHandler {
         }
 
         for (com.udalny.documents.paydocs.Doc doc: payDocs.getDocs()) {
-            if(uuidMap.containsKey(doc.getGUID())) {
-                res.add(new SummaryDocument(doc, uuidMap.get(doc.getGUID())));
+            if(uuidMap.containsKey(doc.getGuid())) {
+                res.add(new SummaryDocument(doc, uuidMap.get(doc.getGuid())));
             }
         }
 

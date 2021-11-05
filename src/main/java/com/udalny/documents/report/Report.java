@@ -1,107 +1,132 @@
 package com.udalny.documents.report;
 
 import com.udalny.documents.ServerDocument;
-import com.udalny.util.ObjectMapper;
 import jakarta.xml.bind.annotation.*;
 
 import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @XmlRootElement(name = "SKP_REPORT_KS")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Report
         extends ServerDocument {
 
-    private BigInteger DocNum;
-    private Date DocDate;
-    private Date DocDateOld;
-    private BigInteger AccNum;
-    private String Report_type_flag;
-    private int Code_OKEU;
-    private String Executor_SFP;
-    private String Executor_Post;
-    private StmInfrmtnTF StmInfrmtn_TF;
+    @XmlElement(name = "DocNum")
+    private BigInteger docNum;
+    @XmlElement(name = "DocDate")
+    private Date docDate;
+    @XmlElement(name = "DocDateOld")
+    private Date docDateOld;
+    @XmlElement(name = "AccNum")
+    private BigInteger accNum;
+    @XmlElement(name = "Report_type_flag")
+    private String reportTypeFlag;
+    @XmlElement(name = "Code_OKEU")
+    private int codeOKEU;
+    @XmlElement(name = "Executor_SFP")
+    private String executorSFP;
+    @XmlElement(name = "Executor_Post")
+    private String executorPost;
+    @XmlElement(name = "StmInfrmtn_TF", type = StmInfrmtnTF.class)
+    private StmInfrmtnTF stmInfrmtnTF;
     @XmlElementWrapper(name = "Docs")
     @XmlElement(name = "Doc", type = Doc.class)
-    private List<Doc> Docs;
-
-    public Report() {
-    }
-
-    public Report(Map<String, Object> map) {
-
-        ObjectMapper.map(this, map);
-
-        Map<String, Object> docMap = (Map<String, Object>) map.get("Docs");
-        Docs = Doc.parseDocs(docMap);
-
-        Map<String, Object> stmMap = (Map<String, Object>) map.get("StmInfrmtn_TF");
-        StmInfrmtn_TF = new StmInfrmtnTF(stmMap);
-    }
-
-    public void setStmInfrmtn_TF(StmInfrmtnTF stmInfrmtn_TF) {
-        StmInfrmtn_TF = stmInfrmtn_TF;
-    }
-
-    public void setDocs(List<Doc> docs) {
-        Docs = docs;
-    }
+    private List<Doc> docs;
 
     public BigInteger getDocNum() {
-        return DocNum;
+        return docNum;
+    }
+
+    public void setDocNum(BigInteger docNum) {
+        this.docNum = docNum;
     }
 
     public Date getDocDate() {
-        return DocDate;
+        return docDate;
+    }
+
+    public void setDocDate(Date docDate) {
+        this.docDate = docDate;
     }
 
     public Date getDocDateOld() {
-        return DocDateOld;
+        return docDateOld;
+    }
+
+    public void setDocDateOld(Date docDateOld) {
+        this.docDateOld = docDateOld;
     }
 
     public BigInteger getAccNum() {
-        return AccNum;
+        return accNum;
     }
 
-    public String getReport_type_flag() {
-        return Report_type_flag;
+    public void setAccNum(BigInteger accNum) {
+        this.accNum = accNum;
     }
 
-    public int getCode_OKEU() {
-        return Code_OKEU;
+    public String getReportTypeFlag() {
+        return reportTypeFlag;
     }
 
-    public String getExecutor_SFP() {
-        return Executor_SFP;
+    public void setReportTypeFlag(String reportTypeFlag) {
+        this.reportTypeFlag = reportTypeFlag;
     }
 
-    public String getExecutor_Post() {
-        return Executor_Post;
+    public int getCodeOKEU() {
+        return codeOKEU;
     }
 
-    public StmInfrmtnTF getStmInfrmtn_TF() {
-        return StmInfrmtn_TF;
+    public void setCodeOKEU(int codeOKEU) {
+        this.codeOKEU = codeOKEU;
+    }
+
+    public String getExecutorSFP() {
+        return executorSFP;
+    }
+
+    public void setExecutorSFP(String executorSFP) {
+        this.executorSFP = executorSFP;
+    }
+
+    public String getExecutorPost() {
+        return executorPost;
+    }
+
+    public void setExecutorPost(String executorPost) {
+        this.executorPost = executorPost;
+    }
+
+    public StmInfrmtnTF getStmInfrmtnTF() {
+        return stmInfrmtnTF;
+    }
+
+    public void setStmInfrmtnTF(StmInfrmtnTF stmInfrmtnTF) {
+        this.stmInfrmtnTF = stmInfrmtnTF;
     }
 
     public List<Doc> getDocs() {
-        return Docs;
+        return docs;
+    }
+
+    public void setDocs(List<Doc> docs) {
+        this.docs = docs;
     }
 
     @Override
     public String toString() {
         return "Report{" +
-                "DocNum=" + DocNum +
-                ", DocDate=" + DocDate +
-                ", DocDateOld=" + DocDateOld +
-                ", AccNum=" + AccNum +
-                ", Report_type_flag='" + Report_type_flag + '\'' +
-                ", Code_OKEU=" + Code_OKEU +
-                ", Executor_SFP='" + Executor_SFP + '\'' +
-                ", Executor_Post='" + Executor_Post + '\'' +
-                ", StmInfrmtn_TF=" + StmInfrmtn_TF +
-                ", Docs=" + Docs +
+                "docNum=" + docNum +
+                ", docDate=" + docDate +
+                ", docDateOld=" + docDateOld +
+                ", accNum=" + accNum +
+                ", reportTypeFlag='" + reportTypeFlag + '\'' +
+                ", codeOKEU=" + codeOKEU +
+                ", executorSFP='" + executorSFP + '\'' +
+                ", executorPost='" + executorPost + '\'' +
+                ", stmInfrmtnTF=" + stmInfrmtnTF +
+                ", docs=" + docs +
                 '}';
     }
 }

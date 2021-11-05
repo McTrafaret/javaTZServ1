@@ -1,6 +1,5 @@
 package com.udalny.xml.dom;
 
-import com.udalny.exceptions.FieldMapException;
 import com.udalny.documents.report.Doc;
 import com.udalny.documents.report.Report;
 import com.udalny.documents.report.StmInfrmtnTF;
@@ -12,6 +11,9 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,7 +24,9 @@ public class XMLDomParserReport
         implements XMLParser<Report> {
 
     static final String REPORT_TAG = "SKP_REPORT_KS";
-    static final String NOT_REPORT_ERROR = "The file is not valid Report document";
+    static final String UNKNOWN_TAG_WARNING = "Unknown tag found while parsing: {}";
+    private final SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+
 
     public XMLDomParserReport() {
         super();
@@ -31,7 +35,54 @@ public class XMLDomParserReport
     public Doc parseDoc(Element el) {
         Doc ret = new Doc();
 
-        parseObject(ret, el);
+        NodeList children = el.getChildNodes();
+        for (int i = 0; i < children.getLength(); i++) {
+            if (children.item(i).getNodeType() == Node.ELEMENT_NODE) {
+                Element docElement = (Element) children.item(i);
+                try {
+                    switch (docElement.getTagName()) {
+                        case "Line_Num":
+                            ret.setLineNum(Integer.parseInt(getTextValue(docElement)));
+                            break;
+                        case "DocNum":
+                            ret.setDocNum(Integer.parseInt(getTextValue(docElement)));
+                            break;
+                        case "DocDate":
+                            ret.setDocDate(dateFormatter.parse(getTextValue(docElement)));
+                            break;
+                        case "DocGUID":
+                            ret.setDocGUID(getTextValue(docElement));
+                            break;
+                        case "OperType":
+                            ret.setOperType(getTextValue(docElement));
+                            break;
+                        case "Bic_Corr":
+                            ret.setBicCorr(getTextValue(docElement));
+                            break;
+                        case "AmountIn":
+                            ret.setAmountIn(new BigDecimal(getTextValue(docElement)));
+                            break;
+                        case "AmountOut":
+                            ret.setAmountOut(new BigDecimal(getTextValue(docElement)));
+                            break;
+                        case "SendAcc":
+                            ret.setSendAcc(getTextValue(docElement));
+                            break;
+                        case "RecipAcc":
+                            ret.setRecipAcc(getTextValue(docElement));
+                            break;
+                        case "PurpPay":
+                            ret.setPurpPay(getTextValue(docElement));
+                            break;
+                        default:
+                            logger.warn(UNKNOWN_TAG_WARNING, docElement.getTagName());
+                            break;
+                    }
+                } catch (Exception ex) {
+                    logger.error(ex.getMessage(), ex);
+                }
+            }
+        }
 
         return ret;
 
@@ -40,7 +91,18 @@ public class XMLDomParserReport
     public StmInfrmtnTF parseStmInfrmtn(Element el) {
         StmInfrmtnTF res = new StmInfrmtnTF();
 
-        parseObject(res, el);
+        NodeList children = el.getChildNodes();
+        for (int i = 0; i < children.getLength(); i++) {
+            if (children.item(i).getNodeType() == Node.ELEMENT_NODE) {
+                Element child = (Element) children.item(i);
+                if(child.getTagName().equals("GUID")) {
+                    res.setGuid(getTextValue(child));
+                }
+                else {
+                    logger.warn(UNKNOWN_TAG_WARNING, child.getTagName());
+                }
+            }
+        }
 
         return res;
 
@@ -54,8 +116,8 @@ public class XMLDomParserReport
             if (children.item(i).getNodeType() == Node.ELEMENT_NODE) {
                 Element docElement = (Element) children.item(i);
                 if (!docElement.getTagName().equals("Doc")) {
-                    logger.info(String.format("Unknown entry %s, while parsing Report Doc",
-                            docElement.getTagName()));
+                    logger.info(UNKNOWN_TAG_WARNING,
+                            docElement.getTagName());
                 } else {
                     Doc parsedDoc = parseDoc(docElement);
                     docs.add(parsedDoc);
@@ -78,18 +140,44 @@ public class XMLDomParserReport
             if (rootChildren.item(i).getNodeType() == Node.ELEMENT_NODE) {
                 Element child = (Element) rootChildren.item(i);
 
-                if (child.getTagName().equals("Docs"))
-                    report.setDocs(parseDocs(child));
-
-                else if (child.getTagName().equals("StmInfrmtn_TF"))
-                    report.setStmInfrmtn_TF(parseStmInfrmtn(child));
-
-                else {
-                    try {
-                        checkFieldAndSet(report, child);
-                    } catch (FieldMapException ex) {
-                        logger.error(ex.toString());
+                try {
+                    switch (child.getTagName()) {
+                        case "DocNum":
+                            report.setDocNum(new BigInteger(getTextValue(child)));
+                            break;
+                        case "DocDate":
+                            report.setDocDate(dateFormatter.parse(getTextValue(child)));
+                            break;
+                        case "DocDateOld":
+                            report.setDocDateOld(dateFormatter.parse(getTextValue(child)));
+                            break;
+                        case "AccNum":
+                            report.setAccNum(new BigInteger(getTextValue(child)));
+                            break;
+                        case "Report_type_flag":
+                            report.setReportTypeFlag(getTextValue(child));
+                            break;
+                        case "Code_OKEU":
+                            report.setCodeOKEU(Integer.parseInt(getTextValue(child)));
+                            break;
+                        case "Executor_SFP":
+                            report.setExecutorSFP(getTextValue(child));
+                            break;
+                        case "Executor_Post":
+                            report.setExecutorPost(getTextValue(child));
+                            break;
+                        case "Docs":
+                            report.setDocs(parseDocs(child));
+                            break;
+                        case "StmInfrmtn_TF":
+                            report.setStmInfrmtnTF(parseStmInfrmtn(child));
+                            break;
+                        default:
+                            logger.warn(UNKNOWN_TAG_WARNING, child.getTagName());
+                            break;
                     }
+                } catch (Exception ex) {
+                    logger.error(ex.getMessage(), ex);
                 }
             }
         }

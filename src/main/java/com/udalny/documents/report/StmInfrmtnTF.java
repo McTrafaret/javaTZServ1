@@ -1,28 +1,30 @@
 package com.udalny.documents.report;
 
-import com.udalny.util.ObjectMapper;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
 
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.Map;
 
 @XmlRootElement(name = "StmInfrmtn_TF")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class StmInfrmtnTF {
-    private String GUID;
 
-    public StmInfrmtnTF() {
+    @XmlElement(name = "GUID")
+    private String guid;
+
+    public String getGuid() {
+        return guid;
     }
 
-    public StmInfrmtnTF(Map<String, Object> map) {
-        ObjectMapper.map(this, map);
+    public void setGuid(String guid) {
+        this.guid = guid;
     }
 
     @Override
     public String toString() {
         return "StmInfrmtnTF{" +
-                "GUID='" + GUID + '\'' +
+                "guid='" + guid + '\'' +
                 '}';
     }
 }
