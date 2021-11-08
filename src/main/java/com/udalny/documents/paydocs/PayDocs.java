@@ -22,8 +22,8 @@ public class PayDocs
     @XmlElement(name = "Kol_Doc")
     private int kolDoc;
     @XmlElementWrapper(name = "Docs")
-    @XmlElement(name = "Doc", type = Doc.class)
-    private List<Doc> docs;
+    @XmlElement(name = "Doc", type = PayDoc.class)
+    private List<PayDoc> docs;
 
     public String getGuidDoc() {
         return guidDoc;
@@ -65,11 +65,11 @@ public class PayDocs
         this.kolDoc = kolDoc;
     }
 
-    public List<Doc> getDocs() {
+    public List<PayDoc> getDocs() {
         return docs;
     }
 
-    public void setDocs(List<Doc> docs) {
+    public void setDocs(List<PayDoc> docs) {
         this.docs = docs;
     }
 

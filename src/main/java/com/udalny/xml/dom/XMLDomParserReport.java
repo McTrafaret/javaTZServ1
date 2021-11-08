@@ -1,6 +1,6 @@
 package com.udalny.xml.dom;
 
-import com.udalny.documents.report.Doc;
+import com.udalny.documents.report.ReportDoc;
 import com.udalny.documents.report.Report;
 import com.udalny.documents.report.StmInfrmtnTF;
 import com.udalny.xml.XMLParser;
@@ -32,8 +32,8 @@ public class XMLDomParserReport
         super();
     }
 
-    public Doc parseDoc(Element el) {
-        Doc ret = new Doc();
+    public ReportDoc parseDoc(Element el) {
+        ReportDoc ret = new ReportDoc();
 
         NodeList children = el.getChildNodes();
         for (int i = 0; i < children.getLength(); i++) {
@@ -108,8 +108,8 @@ public class XMLDomParserReport
 
     }
 
-    public List<Doc> parseDocs(Element el) {
-        List<Doc> docs = new LinkedList<>();
+    public List<ReportDoc> parseDocs(Element el) {
+        List<ReportDoc> docs = new LinkedList<>();
 
         NodeList children = el.getChildNodes();
         for (int i = 0; i < children.getLength(); i++) {
@@ -119,7 +119,7 @@ public class XMLDomParserReport
                     logger.info(UNKNOWN_TAG_WARNING,
                             docElement.getTagName());
                 } else {
-                    Doc parsedDoc = parseDoc(docElement);
+                    ReportDoc parsedDoc = parseDoc(docElement);
                     docs.add(parsedDoc);
                 }
             }

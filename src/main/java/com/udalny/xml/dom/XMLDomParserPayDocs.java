@@ -149,8 +149,8 @@ public class XMLDomParserPayDocs
         return res;
     }
 
-    private Doc parseDoc(Element el) {
-        Doc res = new Doc();
+    private PayDoc parseDoc(Element el) {
+        PayDoc res = new PayDoc();
 
         NodeList children = el.getChildNodes();
 
@@ -237,8 +237,8 @@ public class XMLDomParserPayDocs
         return res;
     }
 
-    public List<Doc> parseDocs(Element el) {
-        List<Doc> docs = new LinkedList<>();
+    public List<PayDoc> parseDocs(Element el) {
+        List<PayDoc> docs = new LinkedList<>();
 
         NodeList children = el.getChildNodes();
         for (int i = 0; i < children.getLength(); i++) {
@@ -248,7 +248,7 @@ public class XMLDomParserPayDocs
                     logger.info(UNKNOWN_TAG_WARNING,
                             docElement.getTagName());
                 } else {
-                    Doc parsedDoc = parseDoc(docElement);
+                    PayDoc parsedDoc = parseDoc(docElement);
                     docs.add(parsedDoc);
                 }
             }

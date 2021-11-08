@@ -10,7 +10,7 @@ import java.util.Date;
 
 @XmlRootElement(name = "Doc")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Doc {
+public class ReportDoc {
 
     @XmlElement(name = "Line_Num")
     private int lineNum;

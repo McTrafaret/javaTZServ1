@@ -1,10 +1,12 @@
-package com.udalny.documents.packet;
+package com.udalny.documents.packet.handler;
 
 import com.google.gson.Gson;
 import com.udalny.documents.SummaryDocument;
 import com.udalny.documents.file.FileType;
+import com.udalny.documents.packet.Packet;
+import com.udalny.documents.paydocs.PayDoc;
 import com.udalny.documents.paydocs.PayDocs;
-import com.udalny.documents.report.Doc;
+import com.udalny.documents.report.ReportDoc;
 import com.udalny.documents.report.Report;
 import com.udalny.exceptions.ParseException;
 import com.udalny.xml.DocConverter;
@@ -21,10 +23,10 @@ import java.util.Map;
 @Service
 public class ReportPayDocsPacketHandler implements PacketHandler {
 
+    private static Logger logger = LoggerFactory.getLogger(ReportPayDocsPacketHandler.class);
+
     @Autowired
     private DocConverter docConverter;
-
-    private static Logger logger = LoggerFactory.getLogger(ReportPayDocsPacketHandler.class);
 
     @Override
     public boolean probe(Packet packet) {
@@ -50,13 +52,13 @@ public class ReportPayDocsPacketHandler implements PacketHandler {
             return null;
         }
 
-        Map<String, Doc> uuidMap = new HashMap<>();
+        Map<String, ReportDoc> uuidMap = new HashMap<>();
 
-        for (Doc doc : report.getDocs()) {
+        for (ReportDoc doc : report.getDocs()) {
             uuidMap.put(doc.getDocGUID(), doc);
         }
 
-        for (com.udalny.documents.paydocs.Doc doc: payDocs.getDocs()) {
+        for (PayDoc doc: payDocs.getDocs()) {
             if(uuidMap.containsKey(doc.getGuid())) {
                 res.add(new SummaryDocument(doc, uuidMap.get(doc.getGuid())));
             }

@@ -2,9 +2,10 @@ package com.udalny.springboot;
 
 import com.udalny.documents.ZipHandler;
 import com.udalny.documents.file.File;
+import com.udalny.documents.file.FileTypeSetter;
 import com.udalny.documents.packet.Packet;
-import com.udalny.documents.packet.PacketCreator;
-import com.udalny.documents.packet.PacketHandler;
+import com.udalny.documents.packet.creator.PacketCreator;
+import com.udalny.documents.packet.handler.PacketHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,18 +25,23 @@ public class FileUploadController {
     private static final String uri = "/update";
 
     @Autowired
-    private List<PacketHandler> handlers;
+    private FileTypeSetter fileTypeSetter;
 
     @Autowired
-    private ZipHandler zipHandler;
+    private PacketCreator<List<File>> packetCreator;
+
+    @Autowired
+    private List<PacketHandler> handlers;
+
 
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
                                     produces = MediaType.APPLICATION_JSON_VALUE)
     public String fileUpload(@RequestParam("file") MultipartFile file)
             throws IOException {
 
-        List<File> files = zipHandler.createListOfFiles(file.getInputStream());
-        Packet packet = PacketCreator.createPacket(files);
+        List<File> files = ZipHandler.createListOfFiles(file.getInputStream());
+        fileTypeSetter.setAll(files);
+        Packet packet = packetCreator.createPacket(files);
         String res = null;
         for (PacketHandler handler : handlers) {
             if (handler.probe(packet)) {

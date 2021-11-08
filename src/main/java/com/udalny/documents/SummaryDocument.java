@@ -1,6 +1,7 @@
 package com.udalny.documents;
 
 import com.udalny.documents.paydocs.*;
+import com.udalny.documents.report.ReportDoc;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -19,7 +20,7 @@ public class SummaryDocument {
     private final InfRcp infRcp;
     private final BankRcp bankRcp;
 
-    public SummaryDocument(Doc payDoc, com.udalny.documents.report.Doc reportDoc) {
+    public SummaryDocument(PayDoc payDoc, ReportDoc reportDoc) {
         docNum = reportDoc.getDocNum();
         docDate = reportDoc.getDocDate();
         docGuid = reportDoc.getDocGUID();

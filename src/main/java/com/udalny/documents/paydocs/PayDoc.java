@@ -12,7 +12,7 @@ import java.util.Date;
 
 @XmlRootElement(name = "Doc")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Doc {
+public class PayDoc {
 
     @XmlElement(name = "Num")
     private int num;

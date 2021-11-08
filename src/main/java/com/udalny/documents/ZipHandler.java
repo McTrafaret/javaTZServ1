@@ -1,8 +1,6 @@
 package com.udalny.documents;
 
 import com.udalny.documents.file.File;
-import com.udalny.documents.file.FileCreator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
@@ -16,13 +14,10 @@ import java.util.zip.ZipInputStream;
 @Service
 public class ZipHandler {
 
-    @Autowired
-    private FileCreator fileCreator;
-
     private ZipHandler() {
     }
 
-    public List<File> createListOfFiles(InputStream in)
+    public static List<File> createListOfFiles(InputStream in)
             throws IOException {
 
         ZipInputStream zipStream = new ZipInputStream(in);
@@ -39,7 +34,7 @@ public class ZipHandler {
                 length = zipStream.read(buffer);
             } while (length != -1);
 
-            files.add(fileCreator.create(entry.getName(), res.toString()));
+            files.add(new File(entry.getName(), res.toString()));
 
         }
 

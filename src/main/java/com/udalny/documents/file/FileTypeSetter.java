@@ -7,23 +7,23 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class FileCreator {
-
-    private List<FileHandler> handlers;
+public class FileTypeSetter {
 
     @Autowired
-    public FileCreator(List<FileHandler> handlers) {
-        this.handlers = handlers;
-    }
+    private List<FileHandler> handlers;
 
-    public File create(String filename, String contents) {
-        File file = new File(filename, contents);
+    public void set(File file) {
         for (FileHandler handler : handlers) {
             if (handler.probe(file)) {
                 handler.handle(file);
             }
         }
-        return file;
+    }
+
+    public void setAll(List<File> files) {
+        for (File f : files) {
+            set(f);
+        }
     }
 
 }

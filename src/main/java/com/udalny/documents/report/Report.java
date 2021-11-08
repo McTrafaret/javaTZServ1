@@ -31,8 +31,8 @@ public class Report
     @XmlElement(name = "StmInfrmtn_TF", type = StmInfrmtnTF.class)
     private StmInfrmtnTF stmInfrmtnTF;
     @XmlElementWrapper(name = "Docs")
-    @XmlElement(name = "Doc", type = Doc.class)
-    private List<Doc> docs;
+    @XmlElement(name = "Doc", type = ReportDoc.class)
+    private List<ReportDoc> docs;
 
     public BigInteger getDocNum() {
         return docNum;
@@ -106,11 +106,11 @@ public class Report
         this.stmInfrmtnTF = stmInfrmtnTF;
     }
 
-    public List<Doc> getDocs() {
+    public List<ReportDoc> getDocs() {
         return docs;
     }
 
-    public void setDocs(List<Doc> docs) {
+    public void setDocs(List<ReportDoc> docs) {
         this.docs = docs;
     }
 
