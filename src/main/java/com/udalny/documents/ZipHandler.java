@@ -1,7 +1,7 @@
 package com.udalny.documents;
 
 import com.udalny.documents.file.File;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-@Service
+@Component
 public class ZipHandler {
 
     private ZipHandler() {

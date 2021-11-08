@@ -1,4 +1,4 @@
-package com.udalny.springboot;
+package com.udalny.springboot.controllers;
 
 
 import org.springframework.stereotype.Controller;

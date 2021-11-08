@@ -1,4 +1,4 @@
-package com.udalny.springboot;
+package com.udalny.springboot.controllers;
 
 import com.udalny.documents.ZipHandler;
 import com.udalny.documents.file.File;
@@ -6,6 +6,7 @@ import com.udalny.documents.file.FileTypeSetter;
 import com.udalny.documents.packet.Packet;
 import com.udalny.documents.packet.creator.PacketCreator;
 import com.udalny.documents.packet.handler.PacketHandler;
+import com.udalny.upload.Uploader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,9 @@ public class FileUploadController {
     @Autowired
     private List<PacketHandler> handlers;
 
+    @Autowired
+    private Uploader<String> uploader;
+
 
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
                                     produces = MediaType.APPLICATION_JSON_VALUE)
@@ -48,6 +52,7 @@ public class FileUploadController {
                 res = handler.handle(packet);
             }
         }
+        uploader.upload(res);
         return res;
 
     }
