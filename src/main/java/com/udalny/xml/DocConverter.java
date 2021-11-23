@@ -1,40 +1,22 @@
 package com.udalny.xml;
 
 import com.udalny.exceptions.ParseException;
-import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-public abstract class DocConverter {
+@Service
+public class DocConverter {
 
-    protected List<XMLParser<?>> parsers;
+    @Autowired
+    private List<Parser<?>> parsers;
 
-    private Document createDocument(InputStream in)
-            throws IOException, ParserConfigurationException, SAXException {
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = factory.newDocumentBuilder();
 
-        return builder.parse(in);
-    }
-
-    public <T> T parse(String s)
-            throws ParseException {
-        return parse(new ByteArrayInputStream(s.getBytes(StandardCharsets.UTF_8)));
-    }
-
-    public <T> T parse(InputStream in)
+    public <T> T parse(String doc)
             throws ParseException {
         try {
-            Document doc = createDocument(in);
-            for (XMLParser<?> parser : parsers) {
+            for (Parser<?> parser : parsers) {
                 if (parser.applied(doc)) {
                     return (T) parser.parse(doc);
                 }
@@ -44,4 +26,5 @@ public abstract class DocConverter {
         }
         throw new ParseException("The file is not applicable to any of the parsers.");
     }
+
 }

@@ -1,6 +1,7 @@
 package com.udalny.documents.packet.handler;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.udalny.documents.SummaryDocument;
 import com.udalny.documents.file.FileType;
 import com.udalny.documents.packet.Packet;
@@ -24,6 +25,7 @@ import java.util.Map;
 public class ReportPayDocsPacketHandler implements PacketHandler {
 
     private static Logger logger = LoggerFactory.getLogger(ReportPayDocsPacketHandler.class);
+    private static Gson gson = new GsonBuilder().setDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz").create();
 
     @Autowired
     private DocConverter docConverter;
@@ -64,7 +66,7 @@ public class ReportPayDocsPacketHandler implements PacketHandler {
             }
         }
 
-        return new Gson().toJson(res);
+        return gson.toJson(res);
     }
 
 }

@@ -8,7 +8,7 @@ import java.util.Date;
 
 
 public class SummaryDocument {
-    private final int docNum;
+    private final String docNum;
     private final Date docDate;
     private final String docGuid;
     private final String operType;
@@ -33,7 +33,7 @@ public class SummaryDocument {
         bankRcp = payDoc.getBankRcp();
     }
 
-    public int getDocNum() {
+    public String getDocNum() {
         return docNum;
     }
 

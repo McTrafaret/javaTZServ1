@@ -45,7 +45,7 @@ public class XMLDomParserReport
                             ret.setLineNum(Integer.parseInt(getTextValue(docElement)));
                             break;
                         case "DocNum":
-                            ret.setDocNum(Integer.parseInt(getTextValue(docElement)));
+                            ret.setDocNum(getTextValue(docElement));
                             break;
                         case "DocDate":
                             ret.setDocDate(dateFormatter.parse(getTextValue(docElement)));

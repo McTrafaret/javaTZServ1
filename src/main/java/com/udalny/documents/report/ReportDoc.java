@@ -15,7 +15,7 @@ public class ReportDoc {
     @XmlElement(name = "Line_Num")
     private int lineNum;
     @XmlElement(name = "DocNum")
-    private int docNum;
+    private String docNum;
     @XmlElement(name = "DocDate")
     private Date docDate;
     @XmlElement(name = "DocGUID")
@@ -43,11 +43,11 @@ public class ReportDoc {
         this.lineNum = lineNum;
     }
 
-    public int getDocNum() {
+    public String getDocNum() {
         return docNum;
     }
 
-    public void setDocNum(int docNum) {
+    public void setDocNum(String docNum) {
         this.docNum = docNum;
     }
 
