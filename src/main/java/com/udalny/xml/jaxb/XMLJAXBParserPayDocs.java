@@ -2,9 +2,9 @@ package com.udalny.xml.jaxb;
 
 import com.udalny.documents.paydocs.PayDocs;
 import com.udalny.exceptions.ParseException;
-import com.udalny.xml.XMLParser;
+import com.udalny.xml.Parser;
+import com.udalny.xml.StringToDocumentConverter;
 import jakarta.xml.bind.JAXBContext;
-import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Unmarshaller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,25 +15,32 @@ import org.w3c.dom.Document;
 @Service
 @Profile("JAXBParser")
 public class XMLJAXBParserPayDocs
-        implements XMLParser<PayDocs> {
+        implements Parser<PayDocs> {
 
     static final String PAYDOCS_TAG = "Inf_Pay_Doc";
     static Logger logger = LoggerFactory.getLogger(XMLJAXBParserPayDocs.class);
 
     @Override
-    public PayDocs parse(Document doc)
+    public PayDocs parse(String docString)
             throws ParseException {
         try {
+            Document doc = StringToDocumentConverter.convert(docString);
             JAXBContext jaxbContext = JAXBContext.newInstance(PayDocs.class);
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
             return (PayDocs) unmarshaller.unmarshal(doc.getDocumentElement());
-        } catch (JAXBException ex) {
+        } catch (Exception ex) {
+            logger.error("Failed to parse", ex);
             throw new ParseException(ex);
         }
     }
 
     @Override
-    public boolean applied(Document doc) {
-        return doc.getDocumentElement().getTagName().equals(PAYDOCS_TAG);
+    public boolean applied(String docString) {
+        try {
+            Document doc = StringToDocumentConverter.convert(docString);
+            return doc.getDocumentElement().getTagName().equals(PAYDOCS_TAG);
+        } catch (Exception ex) {
+            return false;
+        }
     }
 }

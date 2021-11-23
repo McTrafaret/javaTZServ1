@@ -5,6 +5,8 @@ import com.google.gson.GsonBuilder;
 import com.udalny.documents.SummaryDocument;
 import com.udalny.documents.file.FileType;
 import com.udalny.documents.packet.Packet;
+import com.udalny.documents.packet.PacketResult;
+import com.udalny.documents.packet.PacketType;
 import com.udalny.documents.paydocs.PayDoc;
 import com.udalny.documents.paydocs.PayDocs;
 import com.udalny.documents.report.ReportDoc;
@@ -36,7 +38,7 @@ public class ReportPayDocsPacketHandler implements PacketHandler {
     }
 
     @Override
-    public String handle(Packet packet) {
+    public PacketResult handle(Packet packet) {
 
         Report report;
         PayDocs payDocs;
@@ -66,7 +68,7 @@ public class ReportPayDocsPacketHandler implements PacketHandler {
             }
         }
 
-        return gson.toJson(res);
+        return new PacketResult(PacketType.REPORT_PAYDOCS, gson.toJson(res));
     }
 
 }

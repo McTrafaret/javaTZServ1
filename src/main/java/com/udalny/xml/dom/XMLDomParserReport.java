@@ -1,9 +1,11 @@
 package com.udalny.xml.dom;
 
-import com.udalny.documents.report.ReportDoc;
 import com.udalny.documents.report.Report;
+import com.udalny.documents.report.ReportDoc;
 import com.udalny.documents.report.StmInfrmtnTF;
-import com.udalny.xml.XMLParser;
+import com.udalny.exceptions.ParseException;
+import com.udalny.xml.Parser;
+import com.udalny.xml.StringToDocumentConverter;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
@@ -21,7 +23,7 @@ import java.util.List;
 @Profile("DomParser")
 public class XMLDomParserReport
         extends XMLDomParser
-        implements XMLParser<Report> {
+        implements Parser<Report> {
 
     static final String REPORT_TAG = "SKP_REPORT_KS";
     static final String UNKNOWN_TAG_WARNING = "Unknown tag found while parsing: {}";
@@ -95,10 +97,9 @@ public class XMLDomParserReport
         for (int i = 0; i < children.getLength(); i++) {
             if (children.item(i).getNodeType() == Node.ELEMENT_NODE) {
                 Element child = (Element) children.item(i);
-                if(child.getTagName().equals("GUID")) {
+                if (child.getTagName().equals("GUID")) {
                     res.setGuid(getTextValue(child));
-                }
-                else {
+                } else {
                     logger.warn(UNKNOWN_TAG_WARNING, child.getTagName());
                 }
             }
@@ -129,7 +130,16 @@ public class XMLDomParserReport
     }
 
     @Override
-    public Report parse(Document doc) {
+    public Report parse(String docString)
+            throws ParseException {
+
+        Document doc;
+        try {
+            doc = StringToDocumentConverter.convert(docString);
+        } catch (Exception ex) {
+            logger.error("Failed to parse", ex);
+            throw new ParseException(ex);
+        }
         Report report = new Report();
         Element root = doc.getDocumentElement();
 
@@ -187,7 +197,12 @@ public class XMLDomParserReport
     }
 
     @Override
-    public boolean applied(Document doc) {
-        return doc.getDocumentElement().getTagName().equals(REPORT_TAG);
+    public boolean applied(String docString) {
+        try {
+            Document doc = StringToDocumentConverter.convert(docString);
+            return doc.getDocumentElement().getTagName().equals(REPORT_TAG);
+        } catch (Exception ex) {
+            return false;
+        }
     }
 }

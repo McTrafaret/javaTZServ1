@@ -17,7 +17,8 @@ public class FileListPacketCreator
         Packet packet = new Packet();
 
         for (File f : files) {
-            if (f.getType() == FileType.REPORT) {
+            if (f.getType() == FileType.REPORT ||
+                f.getType() == FileType.PT) {
                 packet.setMainDocument(f);
             } else {
                 packet.addDocument(f);

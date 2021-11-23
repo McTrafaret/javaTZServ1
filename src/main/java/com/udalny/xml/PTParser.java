@@ -4,12 +4,14 @@ import com.udalny.documents.PTDocument;
 import com.udalny.exceptions.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.List;
 
+@Service
 public class PTParser
         implements Parser<List<PTDocument>> {
 
@@ -41,7 +43,7 @@ public class PTParser
     private PTDocument parsePT(String line) {
 
         PTDocument document = new PTDocument();
-        String[] data = line.split("|");
+        String[] data = line.split("\\|");
         document.setGuidReceived(data[1]);
         document.setNumReceived(data[2]);
         try {
@@ -60,8 +62,8 @@ public class PTParser
         } catch (java.text.ParseException ex) {
             logger.error("Couldn't parse date", ex);
         }
-        document.setReceiverOrganizationName(data[13]);
-        document.setRejectionReason(data[19]);
+        document.setReceiverOrganizationName(data[14]);
+        document.setRejectionReason(data[20]);
 
         return document;
     }

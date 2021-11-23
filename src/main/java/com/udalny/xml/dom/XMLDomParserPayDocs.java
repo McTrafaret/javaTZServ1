@@ -1,7 +1,9 @@
 package com.udalny.xml.dom;
 
 import com.udalny.documents.paydocs.*;
-import com.udalny.xml.XMLParser;
+import com.udalny.exceptions.ParseException;
+import com.udalny.xml.Parser;
+import com.udalny.xml.StringToDocumentConverter;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
@@ -19,7 +21,7 @@ import java.util.List;
 @Profile("DomParser")
 public class XMLDomParserPayDocs
         extends XMLDomParser
-        implements XMLParser<PayDocs> {
+        implements Parser<PayDocs> {
 
     static final String PAYDOCS_TAG = "Inf_Pay_Doc";
     static final String UNKNOWN_TAG_WARNING = "Unknown tag found while parsing: {}";
@@ -259,7 +261,16 @@ public class XMLDomParserPayDocs
 
 
     @Override
-    public PayDocs parse(Document doc) {
+    public PayDocs parse(String docString)
+            throws ParseException {
+
+        Document doc;
+        try {
+            doc = StringToDocumentConverter.convert(docString);
+        } catch (Exception ex) {
+            logger.error("Failed to parse", ex);
+            throw new ParseException(ex);
+        }
         PayDocs paydocs = new PayDocs();
         Element root = doc.getDocumentElement();
 
@@ -305,7 +316,12 @@ public class XMLDomParserPayDocs
     }
 
     @Override
-    public boolean applied(Document doc) {
-        return doc.getDocumentElement().getTagName().equals(PAYDOCS_TAG);
+    public boolean applied(String docString) {
+        try {
+            Document doc = StringToDocumentConverter.convert(docString);
+            return doc.getDocumentElement().getTagName().equals(PAYDOCS_TAG);
+        } catch (Exception ex) {
+            return false;
+        }
     }
 }

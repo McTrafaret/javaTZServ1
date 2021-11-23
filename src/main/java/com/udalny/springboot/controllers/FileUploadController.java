@@ -1,5 +1,7 @@
 package com.udalny.springboot.controllers;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.udalny.documents.ZipHandler;
 import com.udalny.documents.file.File;
 import com.udalny.documents.file.FileTypeSetter;
@@ -22,8 +24,8 @@ import java.util.List;
 @RestController
 public class FileUploadController {
 
+    private static Gson gson = new GsonBuilder().setDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz").create();
     private static Logger logger = LoggerFactory.getLogger(FileUploadController.class);
-    private static final String uri = "/update";
 
     @Autowired
     private FileTypeSetter fileTypeSetter;
@@ -49,10 +51,10 @@ public class FileUploadController {
         String res = null;
         for (PacketHandler handler : handlers) {
             if (handler.probe(packet)) {
-                res = handler.handle(packet);
+                res = gson.toJson(handler.handle(packet));
             }
         }
-        uploader.upload(res);
+//        uploader.upload(res);
         return res;
 
     }
