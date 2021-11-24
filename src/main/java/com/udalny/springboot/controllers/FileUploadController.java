@@ -54,7 +54,7 @@ public class FileUploadController {
                 res = gson.toJson(handler.handle(packet));
             }
         }
-//        uploader.upload(res);
+        uploader.upload(res);
         return res;
 
     }
