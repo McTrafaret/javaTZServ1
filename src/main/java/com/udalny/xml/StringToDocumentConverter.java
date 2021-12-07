@@ -21,6 +21,7 @@ public class StringToDocumentConverter {
 
         Document doc;
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        factory.setNamespaceAware(true);
         DocumentBuilder builder = factory.newDocumentBuilder();
         doc = builder.parse(new InputSource(new StringReader(str)));
 

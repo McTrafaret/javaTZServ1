@@ -7,6 +7,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -14,7 +15,7 @@ import org.springframework.web.client.RestTemplate;
 public class ServerJsonUploader
         implements Uploader<String> {
 
-    private RestTemplate restTemplate = new RestTemplate();
+    private RestTemplate restTemplate;
     private Logger logger = LoggerFactory.getLogger(ServerJsonUploader.class);
 
     @Value("${upload.server.port}")
@@ -25,6 +26,11 @@ public class ServerJsonUploader
     private String endpoint;
     @Value("${upload.server.method}")
     private String method;
+
+    public ServerJsonUploader() {
+        this.restTemplate = new RestTemplate();
+        restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+    }
 
     private String getUri() {
         return String.format("%s:%s%s", host, port, endpoint);
