@@ -1,9 +1,14 @@
 package com.udalny.documents.packet.creator;
 
+import com.udalny.documents.file.File;
 import com.udalny.documents.packet.Packet;
 
-public interface PacketCreator<T> {
+import java.util.List;
 
-    Packet createPacket(T from);
+public interface PacketCreator {
+
+    Packet createPacket(List<File> from);
+
+    boolean probe(List<File> from);
 
 }

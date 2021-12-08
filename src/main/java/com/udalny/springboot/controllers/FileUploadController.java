@@ -31,7 +31,7 @@ public class FileUploadController {
     private FileTypeSetter fileTypeSetter;
 
     @Autowired
-    private PacketCreator<List<File>> packetCreator;
+    private List<PacketCreator> packetCreators;
 
     @Autowired
     private List<PacketHandler> handlers;
@@ -45,9 +45,20 @@ public class FileUploadController {
     public String fileUpload(@RequestParam("file") MultipartFile file)
             throws IOException {
 
+        boolean goodPacket = false;
+        Packet packet = null;
         List<File> files = ZipHandler.createListOfFiles(file.getInputStream());
         fileTypeSetter.setAll(files);
-        Packet packet = packetCreator.createPacket(files);
+        for (PacketCreator packetCreator : packetCreators) {
+            if(packetCreator.probe(files)) {
+                packet = packetCreator.createPacket(files);
+                goodPacket = true;
+                break;
+            }
+        }
+        if(!goodPacket) {
+            return null;
+        }
         String res = null;
         for (PacketHandler handler : handlers) {
             if (handler.probe(packet)) {

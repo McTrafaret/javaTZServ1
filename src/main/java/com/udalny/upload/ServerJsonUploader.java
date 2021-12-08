@@ -2,12 +2,13 @@ package com.udalny.upload;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -27,9 +28,9 @@ public class ServerJsonUploader
     @Value("${upload.server.method}")
     private String method;
 
-    public ServerJsonUploader() {
-        this.restTemplate = new RestTemplate();
-        restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+    @Autowired
+    public ServerJsonUploader(RestTemplateBuilder builder) {
+        this.restTemplate = builder.build();
     }
 
     private String getUri() {
